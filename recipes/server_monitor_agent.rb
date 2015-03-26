@@ -35,7 +35,7 @@ when 'debian', 'ubuntu', 'redhat', 'centos', 'fedora', 'scientific', 'amazon', '
     group     node['cog_newrelic']['server_monitor_agent']['config_file_group']
     mode      0640
     variables(
-      :license        => newrelic_license[:license_key],
+      :license        => newrelic_license["license_key"],
       :logfile        => node['cog_newrelic']['server_monitoring']['logfile'],
       :loglevel       => node['cog_newrelic']['server_monitoring']['loglevel'],
       :proxy          => node['cog_newrelic']['server_monitoring']['proxy'],
