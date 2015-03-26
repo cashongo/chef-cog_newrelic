@@ -19,6 +19,12 @@
 
 include_recipe 'cog_newrelic::repository'
 
+chef_gem 'chef-vault' do
+  compile_time true if respond_to?(:compile_time)
+end
+
+include_recipe 'chef-vault'
+
 newrelic_license = chef_vault_item("newrelic", "license_key")
 
 case node['platform']
