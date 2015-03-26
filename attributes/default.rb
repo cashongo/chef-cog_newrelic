@@ -29,7 +29,7 @@ when 'smartos'
 else
   default['cog_newrelic']['server_monitor_agent']['service_name']       = 'newrelic-sysmond'
   default['cog_newrelic']['server_monitor_agent']['config_path']        = '/etc/newrelic'
-  default['cog_newrelic']['server_monitor_agent']['config_file_group']  = 'cog_newrelic'
+  default['cog_newrelic']['server_monitor_agent']['config_file_group']  = 'newrelic'
 end
 
 default['cog_newrelic']['server_monitor_agent']['service_notify_action']  = :restart
