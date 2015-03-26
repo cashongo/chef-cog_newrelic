@@ -17,10 +17,10 @@
 # limitations under the License.
 #
 
-include_recipe 'cog_newrelic::server_monitor_agent'
-
 chef_gem 'chef-vault' do
   compile_time true if respond_to?(:compile_time)
 end
 
 include_recipe 'chef-vault'
+
+include_recipe 'cog_newrelic::server_monitor_agent'

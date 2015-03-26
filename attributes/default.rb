@@ -33,7 +33,7 @@ else
 end
 
 default['cog_newrelic']['server_monitor_agent']['service_notify_action']  = :restart
-default['cog_newrelic']['server_monitor_agent']['service_actions']        = [:enable, :start] 
+default['cog_newrelic']['server_monitor_agent']['service_actions']        = [:enable, :start]
 default['cog_newrelic']['server_monitor_agent']['config_file_user']       = 'root'
 default['cog_newrelic']['server_monitor_agent']['template']['cookbook']   = 'cog_newrelic'
-default['cog_newrelic']['server_monitor_agent']['template']['source']     = 'agent/server_monitor/nrsysmond.cfg.erb'
+default['cog_newrelic']['server_monitor_agent']['template']['source']     = 'nrsysmond.cfg.erb'
