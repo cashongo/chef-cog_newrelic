@@ -27,6 +27,11 @@ include_recipe 'chef-vault'
 
 newrelic_license = chef_vault_item("newrelic", "license_key")
 
+log "message" do
+  message "nr license: #{newrelic_license} "
+  level :info
+end
+
 template '/etc/newrelic/newrelic.cfg' do
   source 'newrelic_php_daemon.cfg.erb'
   mode      0644
