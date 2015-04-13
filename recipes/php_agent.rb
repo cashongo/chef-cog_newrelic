@@ -33,10 +33,8 @@ template '/etc/newrelic/newrelic.cfg' do
   owner     'root'
   group     'root'
   variables({
-    :license_key    => newrelic_license,
-    :app_name       => node['cog_newrelic']['php_agent']['app_name'],
-    :framework      => node['cog_newrelic']['php_agent']['framework']
   })
+end
 
 yum_package 'newrelic-php5' do
 
@@ -44,11 +42,16 @@ yum_package 'newrelic-php5' do
 end
 
 template '/etc/php.d/newrelic.ini' do
-source 'newrelic.ini.erb'
-mode      0644
-owner     'root'
-group     'root'
-variables({
-  :name         => 'gearman',
-  :extension    => 'gearman.so'
-})
+  source 'newrelic.ini.erb'
+  mode      0644
+  owner     'root'
+  group     'root'
+  variables({
+    :license_key    => newrelic_license,
+    :app_name       => node['cog_newrelic']['php_agent']['app_name'],
+    :framework      => node['cog_newrelic']['php_agent']['framework']
+  })
+
+#TODO: make this version agnostic
+  notifies :restart, 'service[php-fpm-5.5]'
+end
