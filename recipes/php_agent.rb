@@ -47,7 +47,7 @@ template '/etc/php.d/newrelic.ini' do
   owner     'root'
   group     'root'
   variables({
-    :license_key    => 'test',#newrelic_license["license_key"],
+    :license_key    => newrelic_license["license_key"],
     :app_name       => node['cog_newrelic']['php_agent']['app_name'],
     :framework      => node['cog_newrelic']['php_agent']['framework']
   })
