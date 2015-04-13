@@ -1,3 +1,6 @@
+# 0.1.6
+- added php_agent recipe
+
 # 0.1.0
 
 Initial release of cog_newrelic

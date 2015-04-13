@@ -37,3 +37,6 @@ default['cog_newrelic']['server_monitor_agent']['service_actions']        = [:en
 default['cog_newrelic']['server_monitor_agent']['config_file_user']       = 'root'
 default['cog_newrelic']['server_monitor_agent']['template']['cookbook']   = 'cog_newrelic'
 default['cog_newrelic']['server_monitor_agent']['template']['source']     = 'nrsysmond.cfg.erb'
+
+default['cog_newrelic']['php_agent']['app_name']                          = 'CoG App'
+default['cog_newrelic']['php_agent']['framework']                         = ''
