@@ -51,7 +51,4 @@ template '/etc/php.d/newrelic.ini' do
     :app_name       => node['cog_newrelic']['php_agent']['app_name'],
     :framework      => node['cog_newrelic']['php_agent']['framework']
   })
-
-#TODO: make this version agnostic
-  notifies :restart, 'service[php-fpm-5.5]'
 end
