@@ -77,6 +77,12 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache.conf' do
   action :create
 end
 
+cron "noop" do
+  hour '5'
+  minute '0'
+  command 'curl http://localhost/newrelic-phpopcache.php 2&>1 > /dev/null'
+end
+
 service 'nginx' do
 
   action [ :enable, :start ]
