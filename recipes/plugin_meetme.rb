@@ -85,7 +85,7 @@ if node['cog_newrelic']['plugin-agent']['nginx']
        'access_log'              => 'off',
        'allow'                   => '127.0.0.1',
        'deny'                    => 'all',
-       'stab_status'             => 'on'
+       'stub_status'             => 'on'
        }
      })
 
