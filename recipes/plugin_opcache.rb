@@ -49,7 +49,7 @@ template '/etc/newrelic/newrelic-phpopcache.ini' do
     :hostname         => node.hostname,
     :nr_license       => newrelic_license['license_key'],
     :server_instance  => node.hostname,
-    :poll_cycle       => '60'
+    :poll_cycle       => 60
   })
 
   action :create

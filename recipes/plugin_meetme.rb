@@ -38,10 +38,10 @@ template '/etc/newrelic/newrelic-plugin-agent.cfg' do
   variables({
     :user         => node['cog_newrelic']['user'],
     :license_key  => newrelic_license['license_key'],
-    :hostname     => node.hostname
-    :include_memcached  => node['cog_newrelic']['plugin-agent']['memcached']
-    :include_php_fpm    => node['cog_newrelic']['plugin-agent']['php-fpm']
-    :include_nginx      => node['cog_newrelic']['plugin-agent']['nginx']
+    :hostname     => node.hostname,
+    :include_memcached  => node['cog_newrelic']['plugin-agent']['memcached'],
+    :include_php_fpm    => node['cog_newrelic']['plugin-agent']['php-fpm'],
+    :include_nginx      => node['cog_newrelic']['plugin-agent']['nginx'],
     :php_fpm_pool       => node['cog_newrelic']['plugin-agent']['php-fpm']['pools']
   })
 
