@@ -23,6 +23,7 @@ template "/etc/nginx/conf.d/status.conf" do
 end
 
 package 'libffi-devel'
+package 'python27-devel'
 
 include_recipe 'python'
 
