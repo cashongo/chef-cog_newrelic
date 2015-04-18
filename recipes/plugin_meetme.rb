@@ -22,8 +22,11 @@ template "/etc/nginx/conf.d/status.conf" do
  action :create
 end
 
+package 'libffi-devel'
+
 include_recipe 'python'
 
+python_pip 'requests[security]'
 python_pip 'newrelic-plugin-agent'
 
 python_pip 'newrelic-plugin-agent[mongodb]'
