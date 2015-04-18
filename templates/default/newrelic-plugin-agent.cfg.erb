@@ -23,12 +23,12 @@ Application:
 
 <% if @include_php_fpm -%>
   php_fpm:
-  <% @php_fpm_pool.each do |pool,values| -%>
-    - name: <%= pool['name'] %>
+  <% @php_fpm_pool.each do |pool,value| -%>
+    - name: <%= value[:name] %>
       scheme: http
       host: localhost
       port: 80
-      path: <%= pool['path'] %>
+      path: <%= value[:path:] %>
       query: json
   <% end -%>
 <% end -%>
