@@ -40,3 +40,7 @@ default['cog_newrelic']['server_monitor_agent']['template']['source']     = 'nrs
 
 default['cog_newrelic']['php_agent']['app_name']                          = 'CoG App'
 default['cog_newrelic']['php_agent']['framework']                         = ''
+
+default['cog_new-relic']['plugin-path']                                   = '/opt/newrelic'
+
+default['cog_new-relic']['plugin_opcache']['version']                     = '1.0.3'

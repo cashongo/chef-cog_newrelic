@@ -1,0 +1,11 @@
+server {
+  listen        127.0.0.1:80;
+  server_name   localhost;
+
+  location  <%= @location %> {
+    root      <%= @location %>
+    <% @params.each do |name,value| %>
+    <%= "#{name} = #{value}" %>;
+    <% end %>
+  }
+}
