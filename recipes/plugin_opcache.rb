@@ -20,7 +20,7 @@ package 'php55-fpm' do
   action :install
 end
 
-remote_file "#{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}" do
+remote_file "#{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz" do
   source  "https://bitbucket.org/sking/newrelic-phpopcache/downloads/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz"
 
   action :create_if_missing
