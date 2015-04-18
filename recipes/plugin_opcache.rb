@@ -10,10 +10,16 @@ include_recipe 'chef-vault'
 
 newrelic_license = chef_vault_item("newrelic", "license_key")
 
-
 # make sure nginx is installed to query the stats
 package 'nginx' do
   action :install
+end
+
+template "/etc/nginx/conf.d/status.conf" do
+ source    'nginx-status.conf.erb'
+
+ notifies :restart, 'service[nginx]'
+ action :create
 end
 
 package 'php55-fpm' do
@@ -55,7 +61,7 @@ template '/etc/newrelic/newrelic-phpopcache.ini' do
   action :create
 end
 
-template '/etc/nginx/conf.d/status-newrelic-phpopcache.conf' do
+template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
   source    'nginx-status-plugins.conf.erb'
   variables({
     :location => '~ "^(.+\.php)($|/)"',

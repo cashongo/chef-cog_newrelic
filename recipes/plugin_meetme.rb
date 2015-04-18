@@ -60,7 +60,7 @@ end
 
 if node['cog_newrelic']['plugin-agent']['php-fpm']
   node['cog_newrelic']['plugin-agent']['php-fpm-pools'].each_pair do | pool,value |
-    template "/etc/nginx/conf.d/status-newrelic-meetme-php-fpm-#{value[:name]}.conf" do
+    template "/etc/nginx/conf.d/status-newrelic-meetme-php-fpm-#{value[:name]}" do
      source    'nginx-status-plugins.conf.erb'
      variables({
        :location => "~ ^/(#{value[:port]}-status|#{value[:port]}-ping)$",
@@ -84,7 +84,7 @@ if node['cog_newrelic']['plugin-agent']['php-fpm']
 end
 
 if node['cog_newrelic']['plugin-agent']['nginx']
-  template '/etc/nginx/conf.d/status-newrelic-meetme-nginx.conf' do
+  template '/etc/nginx/conf.d/status-newrelic-meetme-nginx' do
    source    'nginx-status-plugins.conf.erb'
    variables({
      :location => '/nginx_stub_status',
