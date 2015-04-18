@@ -50,7 +50,7 @@ template '/etc/newrelic/newrelic-plugin-agent.cfg' do
 end
 
 if node['cog_newrelic']['plugin-agent']['php-fpm']
-  node['cog_newrelic']['plugin-agent']['php-fpm'].each do | pool,values |
+  node['cog_newrelic']['plugin-agent']['php-fpm-pools'].each do | pool,values |
     template "/etc/nginx/conf.d/status-newrelic-meetme-php-fpm-#{values['name']}.conf" do
      source    'nginx-status-plugins.conf.erb'
      variables({
