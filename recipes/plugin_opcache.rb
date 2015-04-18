@@ -30,7 +30,7 @@ php_fpm_pool "opcache-status" do
     process_manager     'dynamic'
     user                'newrelic'
     group               'newrelic'
-    listen              "127.0.0.1:9100"
+    listen              "127.0.0.1:#{node['cog_newrelic']['php-fpm-port']}"
     allowed_clients     '127.0.0.1'
     max_children        '1'
     start_servers       '1'
@@ -85,7 +85,7 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
       'deny'                    => 'all',
       'fastcgi_param'           => 'SCRIPT_FILENAME $request_filename',
       'include'                 => 'fastcgi_params',
-      'fastcgi_pass'            => '127.0.0.1:9000'
+      'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php-fpm-port']}"
     }
   })
 

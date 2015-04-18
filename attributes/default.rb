@@ -65,3 +65,4 @@ default['cog_newrelic']['log_level']                    = 'notice'
 default['cog_newrelic']['emergency_restart_threshold']  = 0
 default['cog_newrelic']['emergency_restart_interval']   = 0
 default['cog_newrelic']['process_control_timeout']      = 10
+default['cog_newrelic']['php-fpm-port']                 = 9100
