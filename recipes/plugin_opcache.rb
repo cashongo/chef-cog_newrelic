@@ -16,7 +16,7 @@ package 'nginx' do
   action :install
 end
 
-package 'php-fpm' do
+package 'php55-fpm' do
   action :install
 end
 
@@ -82,7 +82,7 @@ service 'nginx' do
   action [ :enable, :start ]
 end
 
-service 'php-fpm' do
+service 'php55-fpm' do
 
   action [ :enable, :start ]
 end
