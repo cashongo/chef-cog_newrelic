@@ -15,6 +15,8 @@ package 'nginx' do
   action :install
 end
 
+include_recipe 'python'
+
 python_pip 'newrelic-plugin-agent'
 
 python_pip 'newrelic-plugin-agent[mongodb]'
