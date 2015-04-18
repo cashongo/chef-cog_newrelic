@@ -64,7 +64,7 @@ if node['cog_newrelic']['plugin-agent']['php-fpm']
          'fastcgi_param'           => 'SCRIPT_NAME     $fastcgi_script_name',
          'fastcgi_param'           => 'PATH_INFO       $fastcgi_path_info',
          'include'                 => 'fastcgi_params',
-         'fastcgi_pass'            => "127.0.0.1:#{values[:port]}"
+         'fastcgi_pass'            => "127.0.0.1:#{pool[:port]}"
        }
      })
 
