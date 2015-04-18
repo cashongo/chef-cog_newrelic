@@ -26,6 +26,19 @@ package 'php55-fpm' do
   action :install
 end
 
+php_fpm_pool "opcache-status" do
+    process_manager     'dynamic'
+    user                'newrelic'
+    group               'newrelic'
+    listen              "127.0.0.1:9100"
+    allowed_clients     '127.0.0.1'
+    max_children        '1'
+    start_servers       '1'
+    min_spare_servers   '0'
+    max_spare_servers   '0'
+    max_requests        '100'
+end
+
 remote_file "#{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz" do
   source  "https://bitbucket.org/sking/newrelic-phpopcache/downloads/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz"
 

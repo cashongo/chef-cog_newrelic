@@ -1,0 +1,37 @@
+; File maintained by chef
+; MANUAL CHANGES WILL BE IGNORED
+
+[<%= @pool_name %>]
+
+user  	= <%= @user  %>
+group 	= <%= @group  %>
+
+listen 					= <%= @listen || "/var/run/php-fpm-#{@pool_name}.sock" %>
+
+listen.allowed_clients 	= <%= @allowed_clients ? ([@allowed_clients].flatten.join(',')) : "127.0.0.1" %>
+
+pm = <%= @process_manager || "ondemand" %>
+pm.max_children 		= <%= @max_children || 50 %>
+
+<% if @process_manager == "dynamic" %>
+pm.start_servers 		= <%= @start_servers || 5 %>
+pm.min_spare_servers 	= <%= @min_spare_servers || 5 %>
+pm.max_spare_servers 	= <%= @max_spare_servers || 35 %>
+<% end %>
+
+<% if @process_manager == "ondemand" %>
+;pm.process_idle_timeout = 10s;
+<% end %>
+
+pm.max_requests = <%= @max_requests || 500 %>
+
+pm.status_path 	= /status
+ping.path 		= /ping
+ping.response 	= pong
+
+catch_workers_output = <%= @catch_workers_output || "no" %>
+
+
+<% @php_options.each do |name,value| %>
+<%= "#{name} = #{value}" %>
+<% end %>
