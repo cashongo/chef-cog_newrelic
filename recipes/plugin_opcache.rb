@@ -70,10 +70,7 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
       'access_log'              => 'off',
       'allow'                   => '127.0.0.1',
       'deny'                    => 'all',
-      'fastcgi_split_path_info' => '^(.+\.php)(.*)$',
-      'fastcgi_param'           => 'SCRIPT_FILENAME $document_root$fastcgi_script_name',
-      'fastcgi_param'           => 'SCRIPT_NAME     $fastcgi_script_name',
-      'fastcgi_param'           => 'PATH_INFO       $fastcgi_path_info',
+      'fastcgi_param'           => 'SCRIPT_FILENAME $request_filename',
       'include'                 => 'fastcgi_params',
       'fastcgi_pass'            => '127.0.0.1:9000'
     }
