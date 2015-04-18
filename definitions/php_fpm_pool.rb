@@ -21,16 +21,16 @@ define :php_fpm_pool, :template => 'php-fpm-5.5-pool.conf.erb', :enable => true 
 
   pool_name = params[:name]
 
-  conf_file = "#{node['peachy_api_core']['pool_conf_dir']}/#{pool_name}.conf"
+  conf_file = "#{node['cog_newrelic']['pool_conf_dir']}/#{pool_name}.conf"
 
   if params[:enable]
     template conf_file do
-      only_if   "test -d #{node['peachy_api_core']['pool_conf_dir']} || mkdir -p #{node['peachy_api_core']['pool_conf_dir']}"
+      only_if   "test -d #{node['cog_newrelic']['pool_conf_dir']} || mkdir -p #{node['cog_newrelic']['pool_conf_dir']}"
       source    params[:template]
       owner     'root'
       group     'root'
       mode      00644
-      cookbook params[:cookbook] || 'peachy_api_core'
+      cookbook params[:cookbook] || 'cog_newrelic'
       variables(
         :pool_name            => pool_name,
         :listen               => params[:listen],

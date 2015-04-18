@@ -51,3 +51,17 @@ default['cog_newrelic']['plugin-agent']['memcached']                      = nil
 default['cog_newrelic']['plugin-agent']['php-fpm']                        = nil
 default['cog_newrelic']['plugin-agent']['nginx']                          = nil
 default['cog_newrelic']['plugin-agent']['php-fpm-pools']                  = nil #expects a hash of hashes: [ 'www' => { :name => 'www', :path => '/php-status-www', :port = '9000'} ]
+
+default['cog_newrelic']['version']                      = '5.5'
+default['cog_newrelic']['php']['ini_file']              = '/etc/php-5.5.ini'
+default['cog_newrelic']['user']                         = nil
+default['cog_newrelic']['group']                        = nil
+default['cog_newrelic']['pool_conf_dir']                = '/etc/php-fpm.d'
+default['cog_newrelic']['conf_file']                    = '/etc/php-fpm.conf'
+default['cog_newrelic']['pid']                          = '/var/run/php-fpm/php-fpm-5.5.pid'
+default['cog_newrelic']['error_log']                    = '/var/log/php-fpm/error.log'
+default['cog_newrelic']['fpm-log-dir']                  = '/var/log/php-fpm'
+default['cog_newrelic']['log_level']                    = 'notice'
+default['cog_newrelic']['emergency_restart_threshold']  = 0
+default['cog_newrelic']['emergency_restart_interval']   = 0
+default['cog_newrelic']['process_control_timeout']      = 10
