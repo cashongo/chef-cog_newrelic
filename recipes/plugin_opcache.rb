@@ -79,7 +79,7 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
   variables({
     :location => '/newrelic-phpopcache',
     :params => {
-      'alias'                   => "#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}/bin/newrelic-phpopcache.php"
+      'alias'                   => "#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}/bin/newrelic-phpopcache.php",
       'access_log'              => 'off',
       'allow'                   => '127.0.0.1',
       'deny'                    => 'all',
