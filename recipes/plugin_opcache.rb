@@ -82,7 +82,7 @@ service 'nginx' do
   action [ :enable, :start ]
 end
 
-service 'php55-fpm' do
+service 'php-fpm' do
 
   action [ :enable, :start ]
 end
