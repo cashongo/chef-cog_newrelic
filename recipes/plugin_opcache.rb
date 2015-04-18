@@ -36,7 +36,7 @@ end
 bash 'extract_plugin' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
-    tar xzf #{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz -C node['cog_new-relic']['plugin-path']
+    tar xzf #{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz -C #{node['cog_new-relic']['plugin-path']}
     chmod 0644 "#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}"
     EOH
 
