@@ -77,13 +77,12 @@ end
 template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
   source    'nginx-status-plugins.conf.erb'
   variables({
-    :location => '~ "^(.+\.php)($|/)"',
-    :root     => "#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}/bin",
+    :location => '/newrelic-phpopcache',
     :params => {
+      'alias'                   => "#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}/bin/newrelic-phpopcache.php"
       'access_log'              => 'off',
       'allow'                   => '127.0.0.1',
       'deny'                    => 'all',
-      'fastcgi_param'           => 'SCRIPT_FILENAME $request_filename',
       'include'                 => 'fastcgi_params',
       'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php-fpm-port']}"
     }
