@@ -3,7 +3,7 @@ server {
   server_name   localhost;
 
   location  <%= @location %> {
-    root      <%= @location %>
+    root      <%= @root %>
     <% @params.each do |name,value| %>
     <%= "#{name} = #{value}" %>;
     <% end %>
