@@ -34,8 +34,8 @@ php_fpm_pool "opcache-status" do
     allowed_clients     '127.0.0.1'
     max_children        '1'
     start_servers       '1'
-    min_spare_servers   '0'
-    max_spare_servers   '0'
+    min_spare_servers   '1'
+    max_spare_servers   '1'
     max_requests        '100'
 end
 
