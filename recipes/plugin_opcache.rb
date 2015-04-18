@@ -59,7 +59,7 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache.conf' do
   source    'nginx-status-plugins.conf.erb'
   variables({
     :location => '~ "^(.+\.php)($|/)"',
-    :root     => "#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}",
+    :root     => "#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}/bin",
     :params => {
       'access_log'              => 'off',
       'allow'                   => '127.0.0.1',
