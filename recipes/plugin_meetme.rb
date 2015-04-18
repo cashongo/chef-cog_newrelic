@@ -66,6 +66,7 @@ if node['cog_newrelic']['plugin-agent']['php-fpm']
          'include'                 => 'fastcgi_params',
          'fastcgi_pass'            => "127.0.0.1:#{values['port']}"
        }
+     })
 
      notifies :restart, 'service[nginx]'
      action :create
