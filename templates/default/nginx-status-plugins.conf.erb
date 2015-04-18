@@ -3,7 +3,9 @@ server {
   server_name   localhost;
 
   location  <%= @location %> {
+    <% if @root -%>
     root      <%= @root %>;
+    <% end -%>
     <% @params.each do |name,value| %>
     <%= "#{name} #{value}" %>;
     <% end %>

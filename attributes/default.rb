@@ -1,4 +1,5 @@
 default['cog_newrelic']['license']                            = nil
+default['cog_newrelic']['user']                               = 'newrelic'
 default['cog_newrelic']['server_monitoring']['license']       = nil
 default['cog_newrelic']['application_monitoring']['license']  = nil
 
@@ -42,5 +43,12 @@ default['cog_newrelic']['php_agent']['app_name']                          = 'CoG
 default['cog_newrelic']['php_agent']['framework']                         = ''
 
 default['cog_new-relic']['plugin-path']                                   = '/opt/newrelic'
-
+default['cog_new-relic']['plugin-log-path']                               = '/var/log/newrelic-plugins'
+default['cog_new-relic']['plugin-run-path']                               = '/var/run/newrelic'
 default['cog_new-relic']['plugin_opcache']['version']                     = '1.0.3'
+
+default['cog_newrelic']['plugin-agent']['memcached']                      = nil
+default['cog_newrelic']['plugin-agent']['php-fpm']                        = nil
+default['cog_newrelic']['plugin-agent']['nginx']                          = nil
+
+default['cog_newrelic']['plugin-agent']['php-fpm']['pools']               = nil #expects an array of hashes: [ 'www' => { :name => 'www', :path => '/php-status-www', :port = '9000'} ]

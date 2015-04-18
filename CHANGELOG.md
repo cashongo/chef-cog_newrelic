@@ -1,3 +1,8 @@
+0.1.10
+======
+
+-	added poise/python dependency for pip lwrp
+
 0.1.9
 =====
 

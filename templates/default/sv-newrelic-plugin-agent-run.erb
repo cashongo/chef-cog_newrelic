@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# File maintained by chef
+# MANUAL CHANGES WILL BE IGNORED
+
+exec 2>&1
+
+exec chpst -u newrelic newrelic-plugin-agent -c /etc/newrelic/newrelic-plugin-agent.cfg -f

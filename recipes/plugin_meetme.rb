@@ -10,88 +10,94 @@ include_recipe 'chef-vault'
 
 newrelic_license = chef_vault_item("newrelic", "license_key")
 
-#python dependencies
-
-package 'py-pip' do
-  action :install
-end
-
-pip install newrelic-plugin-agent
-
-
-
 # make sure nginx is installed to query the stats
 package 'nginx' do
   action :install
 end
 
-package 'php55-fpm' do
-  action :install
-end
+python_pip 'newrelic-plugin-agent'
 
-remote_file "#{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}" do
-  source  "https://bitbucket.org/sking/newrelic-phpopcache/downloads/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz"
+python_pip 'newrelic-plugin-agent[mongodb]'
 
-  action :create_if_missing
-end
-
-directory node['cog_new-relic']['plugin-path'] do
+directory node['cog_new-relic']['plugin-log-path'] do
   recursive true
   mode      0777
 
   action :create
 end
 
-bash 'extract_plugin' do
-  cwd Chef::Config[:file_cache_path]
-  code <<-EOH
-    tar xzf newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz -C node['cog_new-relic']['plugin-path']
-    chmod 0644 "#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}"
-    EOH
-
-  not_if { ::File.exists?("#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}") }
-end
-
-template '/etc/newrelic/newrelic-phpopcache.ini' do
-  source    'newrelic-phpopcache.ini.erb'
-  variables({
-    :hostname         => node.hostname,
-    :nr_license       => newrelic_license,
-    :server_instance  => node.hostname,
-    :poll_cycle       => '60'
-  })
+directory node['cog_new-relic']['plugin-run-path'] do
+  recursive true
+  mode      0777
 
   action :create
 end
 
-template '/etc/nginx/conf.d/status-newrelic-phpopcache.conf' do
-  source    'nginx-status-plugins.conf.erb'
+template '/etc/newrelic/newrelic-plugin-agent.cfg' do
+  source    'newrelic-plugin-agent.cfg.erb'
   variables({
-    :location => '~ "^(.+\.php)($|/)"',
-    :root     => "#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}",
-    :params => {
-      'access_log'              => 'off',
-      'allow'                   => '127.0.0.1',
-      'deny'                    => 'all',
-      'fastcgi_split_path_info' => '^(.+\.php)(.*)$',
-      'fastcgi_param'           => 'SCRIPT_FILENAME $document_root$fastcgi_script_name',
-      'fastcgi_param'           => 'SCRIPT_NAME     $fastcgi_script_name',
-      'fastcgi_param'           => 'PATH_INFO       $fastcgi_path_info',
-      'include'                 => 'fastcgi_params',
-      'fastcgi_pass'            => '127.0.0.1:9000'
-    }
+    :user         => node['cog_newrelic']['user'],
+    :license_key  => newrelic_license['license_key'],
+    :hostname     => node.hostname
+    :include_memcached  => node['cog_newrelic']['plugin-agent']['memcached']
+    :include_php_fpm    => node['cog_newrelic']['plugin-agent']['php-fpm']
+    :include_nginx      => node['cog_newrelic']['plugin-agent']['nginx']
+    :php_fpm_pool       => node['cog_newrelic']['plugin-agent']['php-fpm']['pools']
   })
 
-  notifies :restart, 'service[nginx]'
+  notifies :restart, 'runit_service[newrelic-plugin-agent]'
   action :create
+end
+
+if node['cog_newrelic']['plugin-agent']['php-fpm']
+  node['cog_newrelic']['plugin-agent']['php-fpm'].each |pool,values| do
+    template "/etc/nginx/conf.d/status-newrelic-meetme-php-fpm-#{values['name']}.conf" do
+     source    'nginx-status-plugins.conf.erb'
+     variables({
+       :location => "~ ^/(#{values['port']}-status|#{values['port']}-ping)$",
+       :params => {
+         'access_log'              => 'off',
+         'allow'                   => '127.0.0.1',
+         'deny'                    => 'all',
+         'fastcgi_split_path_info' => '^(.+\.php)(.*)$',
+         'fastcgi_param'           => 'SCRIPT_FILENAME $document_root$fastcgi_script_name',
+         'fastcgi_param'           => 'SCRIPT_NAME     $fastcgi_script_name',
+         'fastcgi_param'           => 'PATH_INFO       $fastcgi_path_info',
+         'include'                 => 'fastcgi_params',
+         'fastcgi_pass'            => "127.0.0.1:#{values['port']}"
+       }
+
+     notifies :restart, 'service[nginx]'
+     action :create
+    end
+  end
+end
+
+if node['cog_newrelic']['plugin-agent']['nginx']
+  template '/etc/nginx/conf.d/status-newrelic-meetme-nginx.conf' do
+   source    'nginx-status-plugins.conf.erb'
+   variables({
+     :location => '/nginx_stub_status',
+     :params => {
+       'access_log'              => 'off',
+       'allow'                   => '127.0.0.1',
+       'deny'                    => 'all',
+       'stab_status'             => 'on'
+       }
+     })
+
+   notifies :restart, 'service[nginx]'
+   action :create
+  end
+end
+
+runit_service 'newrelic-plugin-agent' do
+  default_logger true
+
+  action [ :enable, :restart ]
 end
 
 service 'nginx' do
-
-  action [ :enable, :start ]
-end
-
-service 'php55-fpm' do
 
   action [ :enable, :start ]
 end
