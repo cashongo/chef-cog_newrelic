@@ -15,6 +15,13 @@ package 'nginx' do
   action :install
 end
 
+template "/etc/nginx/conf.d/status.conf" do
+ source    'nginx-status.conf.erb'
+
+ notifies :restart, 'service[nginx]'
+ action :create
+end
+
 include_recipe 'python'
 
 python_pip 'newrelic-plugin-agent'

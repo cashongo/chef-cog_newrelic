@@ -1,13 +1,8 @@
-server {
-  listen        127.0.0.1:80;
-  server_name   localhost;
-
-  location  <%= @location %> {
-    <% if @root -%>
-    root      <%= @root %>;
-    <% end -%>
-    <% @params.each do |name,value| %>
-    <%= "#{name} #{value}" %>;
-    <% end %>
-  }
+location  <%= @location %> {
+  <% if @root -%>
+  root      <%= @root %>;
+  <% end -%>
+  <% @params.each do |name,value| %>
+  <%= "#{name} #{value}" %>;
+  <% end %>
 }
