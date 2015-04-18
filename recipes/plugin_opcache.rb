@@ -74,8 +74,6 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache.conf' do
   })
 
   notifies :restart, 'service[nginx]'
-end
-
   action :create
 end
 
