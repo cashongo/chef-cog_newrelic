@@ -50,5 +50,4 @@ default['cog_new-relic']['plugin_opcache']['version']                     = '1.0
 default['cog_newrelic']['plugin-agent']['memcached']                      = nil
 default['cog_newrelic']['plugin-agent']['php-fpm']                        = nil
 default['cog_newrelic']['plugin-agent']['nginx']                          = nil
-
-default['cog_newrelic']['plugin-agent']['php-fpm']['pools']               = nil #expects an array of hashes: [ 'www' => { :name => 'www', :path => '/php-status-www', :port = '9000'} ]
+default['cog_newrelic']['plugin-agent']['php-fpm-pools']                  = nil #expects an array of hashes: [ 'www' => { :name => 'www', :path => '/php-status-www', :port = '9000'} ]

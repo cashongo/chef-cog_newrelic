@@ -42,7 +42,7 @@ template '/etc/newrelic/newrelic-plugin-agent.cfg' do
     :include_memcached  => node['cog_newrelic']['plugin-agent']['memcached'],
     :include_php_fpm    => node['cog_newrelic']['plugin-agent']['php-fpm'],
     :include_nginx      => node['cog_newrelic']['plugin-agent']['nginx'],
-    :php_fpm_pool       => node['cog_newrelic']['plugin-agent']['php-fpm']['pools']
+    :php_fpm_pool       => node['cog_newrelic']['plugin-agent']['php-fpm-pools']
   })
 
   notifies :restart, 'runit_service[newrelic-plugin-agent]'
