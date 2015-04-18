@@ -44,10 +44,10 @@ bash 'extract_plugin' do
 end
 
 template '/etc/newrelic/newrelic-phpopcache.ini' do
-  source    'newrelic-phpopcache.ini.erb'
+  source    'newrelic_plugin_opcache.ini.erb'
   variables({
     :hostname         => node.hostname,
-    :nr_license       => newrelic_license,
+    :nr_license       => newrelic_license['license_key'],
     :server_instance  => node.hostname,
     :poll_cycle       => '60'
   })
