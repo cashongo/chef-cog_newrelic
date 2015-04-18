@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: cog_newrelic
-# Recipe:: php_opcache
+# Recipe:: php_meetme
 
 chef_gem 'chef-vault' do
   compile_time true if respond_to?(:compile_time)
@@ -9,6 +9,15 @@ end
 include_recipe 'chef-vault'
 
 newrelic_license = chef_vault_item("newrelic", "license_key")
+
+#python dependencies
+
+package 'py-pip' do
+  action :install
+end
+
+pip install newrelic-plugin-agent
+
 
 
 # make sure nginx is installed to query the stats
@@ -36,7 +45,7 @@ end
 bash 'extract_plugin' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
-    tar xzf #{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz -C node['cog_new-relic']['plugin-path']
+    tar xzf newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz -C node['cog_new-relic']['plugin-path']
     chmod 0644 "#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}"
     EOH
 
