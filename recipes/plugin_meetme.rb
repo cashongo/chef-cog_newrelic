@@ -52,11 +52,11 @@ template '/etc/newrelic/newrelic-plugin-agent.cfg' do
 end
 
 if node['cog_newrelic']['plugin-agent']['php-fpm']
-  node['cog_newrelic']['plugin-agent']['php-fpm-pools'].each do | pool |
-    template "/etc/nginx/conf.d/status-newrelic-meetme-php-fpm-#{pool[:name]}.conf" do
+  node['cog_newrelic']['plugin-agent']['php-fpm-pools'].each_pair do | pool,value |
+    template "/etc/nginx/conf.d/status-newrelic-meetme-php-fpm-#{value[:name]}.conf" do
      source    'nginx-status-plugins.conf.erb'
      variables({
-       :location => "~ ^/(#{pool[:port]}-status|#{pool[:port]}-ping)$",
+       :location => "~ ^/(#{value[:port]}-status|#{value[:port]}-ping)$",
        :params => {
          'access_log'              => 'off',
          'allow'                   => '127.0.0.1',
@@ -66,7 +66,7 @@ if node['cog_newrelic']['plugin-agent']['php-fpm']
          'fastcgi_param'           => 'SCRIPT_NAME     $fastcgi_script_name',
          'fastcgi_param'           => 'PATH_INFO       $fastcgi_path_info',
          'include'                 => 'fastcgi_params',
-         'fastcgi_pass'            => "127.0.0.1:#{pool[:port]}"
+         'fastcgi_pass'            => "127.0.0.1:#{value[:port]}"
        }
      })
 
