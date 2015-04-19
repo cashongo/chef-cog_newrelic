@@ -5,4 +5,4 @@
 
 exec 2>&1
 
-exec chpst -u newrelic "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}/newrelic_gearman_agent"
+exec chpst -u newrelic <%= node['cog_new-relic']['plugin-path'] %>/newrelic-gearman-plugin-<%= node['cog_new-relic']['plugin_gearman']['version']%>/newrelic_gearman_agent"
