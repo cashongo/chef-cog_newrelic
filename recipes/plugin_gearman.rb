@@ -10,6 +10,11 @@ include_recipe 'chef-vault'
 
 newrelic_license = chef_vault_item("newrelic", "license_key")
 
+#app dependencies
+yum_package 'ruby-devel'
+gem_package 'io-console'
+gem_package 'bundler'
+
 remote_file "#{Chef::Config[:file_cache_path]}/newrelic-gearman-#{node['cog_new-relic']['plugin_gearman']['version']}.tar.gz" do
   source  "https://github.com/channelgrabber/newrelic-gearman-plugin/archive/#{node['cog_new-relic']['plugin_gearman']['version']}.tar.gz"
 
@@ -34,6 +39,12 @@ bash 'extract_plugin' do
 end
 
 # runb bundler
+execute 'bundle install' do
+  cwd     "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}"
+  not_if "bundle check --gemfile='#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}'/Gemfile"
+end
+
+
 
 template "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}/config/newrelic_plugin.yml" do
   source    'newrelic-plugin-gearman.cfg.erb'
