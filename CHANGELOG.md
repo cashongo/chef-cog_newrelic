@@ -1,3 +1,8 @@
+0.1.11
+======
+
+-	added channelgrabber/newrelic-gearman-plugin
+
 0.1.10
 ======
 
