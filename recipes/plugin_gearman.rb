@@ -44,8 +44,6 @@ execute 'bundle install' do
   not_if "bundle check --gemfile='#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}'/Gemfile"
 end
 
-
-
 template "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}/config/newrelic_plugin.yml" do
   source    'newrelic-plugin-gearman.cfg.erb'
   variables({
@@ -54,4 +52,10 @@ template "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node
   })
 
   action :create
+end
+
+runit_service 'newrelic-plugin-gearman' do
+  default_logger true
+
+  action [ :enable, :restart ]
 end
