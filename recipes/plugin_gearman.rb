@@ -48,7 +48,7 @@ template "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node
   source    'newrelic-plugin-gearman.cfg.erb'
   variables({
     :hostname         => node.hostname,
-    :nr_license       => newrelic_license['license_key'],
+    :license_key      => newrelic_license['license_key'],
   })
 
   action :create
