@@ -27,15 +27,15 @@ bash 'extract_plugin' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
     tar xzf #{Chef::Config[:file_cache_path]}/newrelic-gearman-#{node['cog_new-relic']['plugin_gearman']['version']}.tar.gz -C #{node['cog_new-relic']['plugin-path']}
-    chmod 0644 "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-#{node['cog_new-relic']['plugin_gearman']['version']}"
+    chmod 0644 "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}"
     EOH
 
-  not_if { ::File.exists?("#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-#{node['cog_new-relic']['plugin_gearman']['version']}") }
+  not_if { ::File.exists?("#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}") }
 end
 
 # runb bundler
 
-template "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-#{node['cog_new-relic']['plugin_gearman']['version']}/config/newrelic_plugin.yml" do
+template "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}/config/newrelic_plugin.yml" do
   source    'newrelic-plugin-gearman.cfg.erb'
   variables({
     :hostname         => node.hostname,
