@@ -52,7 +52,8 @@ bash 'extract_plugin' do
   not_if { ::File.exists?("#{node['cog_newrelic']['plugin-path']}/newrelic_mysql_plugin-#{node['cog_newrelic']['plugin_gearman']['version']}") }
 end
 
-template "#{node['cog_newrelic']['plugin-path']}/newrelic_mysql_plugin-#{node['cog_newrelic']['plugin_mysql']['version']}/plugin.json" do
+Chef::Log.info("#{mysql_access}")
+template "#{node['cog_newrelic']['plugin-path']}/newrelic_mysql_plugin-#{node['cog_newrelic']['plugin_mysql']['version']}/config/plugin.json" do
   source    'newrelic-plugin-mysql.json.cfg.erb'
   variables({
     :name     => node.hostname,
@@ -65,7 +66,7 @@ template "#{node['cog_newrelic']['plugin-path']}/newrelic_mysql_plugin-#{node['c
   action :create
 end
 
-template "#{node['cog_newrelic']['plugin-path']}/newrelic_mysql_plugin-#{node['cog_newrelic']['plugin_mysql']['version']}/newrelic.json" do
+template "#{node['cog_newrelic']['plugin-path']}/newrelic_mysql_plugin-#{node['cog_newrelic']['plugin_mysql']['version']}/config/newrelic.json" do
   source    'newrelic.json.cfg.erb'
   variables({
     :license_key  => newrelic_license['license_key'],

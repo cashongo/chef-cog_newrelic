@@ -5,4 +5,4 @@
 
 exec 2>&1
 
-exec chpst -u<%= node['cog_newrelic']['user']  %> "java -Xmx128m -jar <%= node['cog_newrelic']['plugin-path'] %>/newrelic_mysql_plugin-<%= node['cog_newrelic']['plugin_mysql']['version'] %>/plugin.jar"
+exec chpst "/usr/bin/java -Xmx128m -jar <%= node['cog_newrelic']['plugin-path'] %>/newrelic_mysql_plugin-<%= node['cog_newrelic']['plugin_mysql']['version'] %>/plugin.jar"
