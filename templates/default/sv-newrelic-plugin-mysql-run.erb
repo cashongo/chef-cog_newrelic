@@ -3,5 +3,6 @@
 # File maintained by chef
 # MANUAL CHANGES WILL BE IGNORED
 
+cd <%= node['cog_newrelic']['plugin-path'] %>/newrelic_mysql_plugin-<%= node['cog_newrelic']['plugin_mysql']['version'] %>/
 exec 2>&1
-exec /usr/bin/java -Xmx128m -jar <%= node['cog_newrelic']['plugin-path'] %>/newrelic_mysql_plugin-<%= node['cog_newrelic']['plugin_mysql']['version'] %>/plugin.jar
+exec java -Xmx128m -jar <%= node['cog_newrelic']['plugin-path'] %>/newrelic_mysql_plugin-<%= node['cog_newrelic']['plugin_mysql']['version'] %>/plugin.jar

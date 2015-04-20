@@ -52,9 +52,6 @@ bash 'extract_plugin' do
   not_if { ::File.exists?("#{node['cog_newrelic']['plugin-path']}/newrelic_mysql_plugin-#{node['cog_newrelic']['plugin_gearman']['version']}") }
 end
 
-Chef::Log.info(mysql_access.inspect)
-Chef::Log.info("#{newrelic_license['license_key']}")
-
 template "#{node['cog_newrelic']['plugin-path']}/newrelic_mysql_plugin-#{node['cog_newrelic']['plugin_mysql']['version']}/config/plugin.json" do
   source    'newrelic-plugin-mysql.json.cfg.erb'
   variables({
