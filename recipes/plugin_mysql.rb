@@ -37,7 +37,7 @@ end
 
 # plugin installation & configuration
 remote_file "#{Chef::Config[:file_cache_path]}/newrelic-mysql-#{node['cog_newrelic']['plugin_mysql']['version']}.tar.gz" do
-  source  "https://github.com/newrelic-platform/newrelic_mysql_java_plugin/blob/master/dist/newrelic_mysql_plugin-#{node['cog_newrelic']['plugin_mysql']['version']}.tar.gz"
+  source  "https://github.com/newrelic-platform/newrelic_mysql_java_plugin/blob/master/dist/newrelic_mysql_plugin-#{node['cog_newrelic']['plugin_mysql']['version']}.tar.gz?raw=true"
 
   action :create_if_missing
 end
