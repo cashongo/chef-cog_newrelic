@@ -3,4 +3,7 @@
 # File maintained by chef
 # MANUAL CHANGES WILL BE IGNORED
 
-<%= node['cog_newrelic']['plugin-path'] %>/newrelic-gearman-plugin-<%= node['cog_newrelic']['plugin_gearman']['version']%>/newrelic_gearman_agent
+exec 2>&1
+
+cd <%= node['cog_newrelic']['plugin-path'] %>/newrelic-gearman-plugin-<%= node['cog_newrelic']['plugin_gearman']['version']%>
+exec newrelic_gearman_agent

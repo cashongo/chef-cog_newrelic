@@ -54,3 +54,9 @@ template "#{node['cog_newrelic']['plugin-path']}/newrelic-gearman-plugin-#{node[
 
   action :create
 end
+
+runit_service 'newrelic-plugin-gearman' do
+  default_logger true
+
+  action [ :enable, :start ]
+end
