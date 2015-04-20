@@ -53,7 +53,7 @@ bash 'extract_plugin' do
 end
 
 Chef::Log.info("#{mysql_access}")
-Chef::Log.info("#{mysql_access['newrelic']}")
+Chef::Log.info("#{newrelic_license}")
 
 template "#{node['cog_newrelic']['plugin-path']}/newrelic_mysql_plugin-#{node['cog_newrelic']['plugin_mysql']['version']}/config/plugin.json" do
   source    'newrelic-plugin-mysql.json.cfg.erb'
