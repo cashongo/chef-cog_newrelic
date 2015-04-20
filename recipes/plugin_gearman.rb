@@ -10,41 +10,42 @@ include_recipe 'chef-vault'
 
 newrelic_license = chef_vault_item("newrelic", "license_key")
 
-#app dependencies
+#plugin dependencies
 yum_package 'ruby-devel'
 gem_package 'io-console'
 gem_package 'bundler'
 
-remote_file "#{Chef::Config[:file_cache_path]}/newrelic-gearman-#{node['cog_new-relic']['plugin_gearman']['version']}.tar.gz" do
-  source  "https://github.com/channelgrabber/newrelic-gearman-plugin/archive/#{node['cog_new-relic']['plugin_gearman']['version']}.tar.gz"
-
-  action :create_if_missing
-end
-
-directory node['cog_new-relic']['plugin-path'] do
+directory node['cog_newrelic']['plugin-path'] do
   recursive true
   mode      0777
 
   action :create
 end
 
+# plugin installation & configuration
+remote_file "#{Chef::Config[:file_cache_path]}/newrelic-gearman-#{node['cog_newrelic']['plugin_gearman']['version']}.tar.gz" do
+  source  "https://github.com/channelgrabber/newrelic-gearman-plugin/archive/#{node['cog_newrelic']['plugin_gearman']['version']}.tar.gz"
+
+  action :create_if_missing
+end
+
 bash 'extract_plugin' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
-    tar xzf #{Chef::Config[:file_cache_path]}/newrelic-gearman-#{node['cog_new-relic']['plugin_gearman']['version']}.tar.gz -C #{node['cog_new-relic']['plugin-path']}
-    chmod 0644 "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}"
+    tar xzf #{Chef::Config[:file_cache_path]}/newrelic-gearman-#{node['cog_newrelic']['plugin_gearman']['version']}.tar.gz -C #{node['cog_newrelic']['plugin-path']}
+    chmod 0644 "#{node['cog_newrelic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_newrelic']['plugin_gearman']['version']}"
     EOH
 
-  not_if { ::File.exists?("#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}") }
+  not_if { ::File.exists?("#{node['cog_newrelic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_newrelic']['plugin_gearman']['version']}") }
 end
 
 # runb bundler
 execute 'bundle install' do
-  cwd     "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}"
-  not_if "bundle check --gemfile='#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}'/Gemfile"
+  cwd     "#{node['cog_newrelic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_newrelic']['plugin_gearman']['version']}"
+  not_if "bundle check --gemfile='#{node['cog_newrelic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_newrelic']['plugin_gearman']['version']}'/Gemfile"
 end
 
-template "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_new-relic']['plugin_gearman']['version']}/config/newrelic_plugin.yml" do
+template "#{node['cog_newrelic']['plugin-path']}/newrelic-gearman-plugin-#{node['cog_newrelic']['plugin_gearman']['version']}/config/newrelic_plugin.yml" do
   source    'newrelic-plugin-gearman.cfg.erb'
   variables({
     :hostname         => node.hostname,
@@ -52,10 +53,4 @@ template "#{node['cog_new-relic']['plugin-path']}/newrelic-gearman-plugin-#{node
   })
 
   action :create
-end
-
-runit_service 'newrelic-plugin-gearman' do
-  default_logger true
-
-  action [ :enable, :restart ]
 end

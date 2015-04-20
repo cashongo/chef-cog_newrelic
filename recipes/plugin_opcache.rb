@@ -39,13 +39,13 @@ php_fpm_pool "opcache-status" do
     max_requests        '100'
 end
 
-remote_file "#{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz" do
-  source  "https://bitbucket.org/sking/newrelic-phpopcache/downloads/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz"
+remote_file "#{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}.tar.gz" do
+  source  "https://bitbucket.org/sking/newrelic-phpopcache/downloads/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}.tar.gz"
 
   action :create_if_missing
 end
 
-directory node['cog_new-relic']['plugin-path'] do
+directory node['cog_newrelic']['plugin-path'] do
   recursive true
   mode      0777
 
@@ -55,11 +55,11 @@ end
 bash 'extract_plugin' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
-    tar xzf #{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}.tar.gz -C #{node['cog_new-relic']['plugin-path']}
-    chmod 0644 "#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}"
+    tar xzf #{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}.tar.gz -C #{node['cog_newrelic']['plugin-path']}
+    chmod 0644 "#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}"
     EOH
 
-  not_if { ::File.exists?("#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}") }
+  not_if { ::File.exists?("#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}") }
 end
 
 template '/etc/newrelic/newrelic-phpopcache.ini' do
@@ -79,7 +79,7 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
   variables({
     :location => '/newrelic-phpopcache',
     :params => {
-      'alias'                   => "#{node['cog_new-relic']['plugin-path']}/newrelic-phpopcache-#{node['cog_new-relic']['plugin_opcache']['version']}/bin/newrelic-phpopcache.php",
+      'alias'                   => "#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}/bin/newrelic-phpopcache.php",
       'access_log'              => 'off',
       'allow'                   => '127.0.0.1',
       'deny'                    => 'all',
@@ -93,8 +93,6 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
 end
 
 cron 'newrelic-phpopcache' do
-  hour '5'
-  minute '0'
   command 'curl http://localhost/newrelic-phpopcache.php 2&>1 > /dev/null'
 end
 

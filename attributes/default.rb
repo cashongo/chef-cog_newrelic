@@ -42,17 +42,19 @@ default['cog_newrelic']['server_monitor_agent']['template']['source']     = 'nrs
 default['cog_newrelic']['php_agent']['app_name']                          = 'CoG App'
 default['cog_newrelic']['php_agent']['framework']                         = ''
 
-default['cog_new-relic']['plugin-path']                                   = '/opt/newrelic'
-default['cog_new-relic']['plugin-log-path']                               = '/var/log/newrelic-plugins'
-default['cog_new-relic']['plugin-run-path']                               = '/var/run/newrelic'
-default['cog_new-relic']['plugin_opcache']['version']                     = '1.0.3'
+default['cog_newrelic']['plugin-path']                                   = '/opt/newrelic'
+default['cog_newrelic']['plugin-log-path']                               = '/var/log/newrelic-plugins'
+default['cog_newrelic']['plugin-run-path']                               = '/var/run/newrelic'
+default['cog_newrelic']['plugin_opcache']['version']                     = '1.0.3'
+default['cog_newrelic']['plugin_gearman']['version']                     = '0.2.0'
+default['cog_newrelic']['plugin_mysql']['version']                       = '2.0.0'
+default['cog_newrelic']['plugin_mysql']['metrics']                       = 'status,newrelic'
 
 default['cog_newrelic']['plugin-agent']['memcached']                      = nil
 default['cog_newrelic']['plugin-agent']['php-fpm']                        = nil
 default['cog_newrelic']['plugin-agent']['nginx']                          = nil
 default['cog_newrelic']['plugin-agent']['php-fpm-pools']                  = nil #expects a hash of hashes: [ 'www' => { :name => 'www', :path => '/php-status-www', :port = '9000'} ]
 
-default['cog_new-relic']['plugin_gearman']['version']                        = '0.2.0'
 
 default['cog_newrelic']['version']                      = '5.5'
 default['cog_newrelic']['php']['ini_file']              = '/etc/php-5.5.ini'

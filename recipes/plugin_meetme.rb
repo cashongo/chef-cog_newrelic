@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: cog_newrelic
-# Recipe:: php_meetme
+# Recipe:: plugin_meetme
 
 chef_gem 'chef-vault' do
   compile_time true if respond_to?(:compile_time)
@@ -10,7 +10,7 @@ include_recipe 'chef-vault'
 
 newrelic_license = chef_vault_item("newrelic", "license_key")
 
-# make sure nginx is installed to query the stats
+# plugin dependencies
 package 'nginx' do
   action :install
 end
@@ -32,27 +32,35 @@ python_pip 'newrelic-plugin-agent'
 
 python_pip 'newrelic-plugin-agent[mongodb]'
 
-directory node['cog_new-relic']['plugin-log-path'] do
+directory node['cog_newrelic']['plugin-log-path'] do
   recursive true
   mode      0777
 
   action :create
 end
 
-directory node['cog_new-relic']['plugin-run-path'] do
+directory node['cog_newrelic']['plugin-run-path'] do
   recursive true
   mode      0777
 
   action :create
 end
 
+directory node['cog_newrelic']['plugin-path'] do
+  recursive true
+  mode      0777
+
+  action :create
+end
+
+# plugin installation & configuration
 template '/etc/newrelic/newrelic-plugin-agent.cfg' do
   source    'newrelic-plugin-agent.cfg.erb'
   variables({
     :user         => node['cog_newrelic']['user'],
     :license_key  => newrelic_license['license_key'],
     :hostname     => node.hostname,
-    :log_path     => node['cog_new-relic']['plugin-log-path'],
+    :log_path     => node['cog_newrelic']['plugin-log-path'],
     :include_memcached  => node['cog_newrelic']['plugin-agent']['memcached'],
     :include_php_fpm    => node['cog_newrelic']['plugin-agent']['php-fpm'],
     :include_nginx      => node['cog_newrelic']['plugin-agent']['nginx'],
@@ -106,7 +114,7 @@ end
 runit_service 'newrelic-plugin-agent' do
   default_logger true
 
-  action [ :enable, :restart ]
+  action [ :enable, :start ]
 end
 
 service 'nginx' do
