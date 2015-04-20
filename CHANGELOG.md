@@ -1,3 +1,8 @@
+0.1.12
+======
+
+-	added plugins for mysql and gearman
+
 0.1.11
 ======
 
