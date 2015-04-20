@@ -68,8 +68,8 @@ end
 template "#{node['cog_newrelic']['plugin-path']}/newrelic_mysql_plugin-#{node['cog_newrelic']['plugin_mysql']['version']}/newrelic.json" do
   source    'newrelic.json.cfg.erb'
   variables({
-    :license_key  => newrelic_license['license_key']
-    :log_level    => 'info'
+    :license_key  => newrelic_license['license_key'],
+    :log_level    => 'info',
     :log_path     => node['cog_newrelic']['plugin-log-path']
   })
 
