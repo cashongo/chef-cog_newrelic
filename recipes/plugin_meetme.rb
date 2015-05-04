@@ -22,8 +22,14 @@ template "/etc/nginx/conf.d/status.conf" do
  action :create
 end
 
-package 'libffi-devel'
-package 'python27-devel'
+#plugin dependencies
+case node['platform_family']
+
+when 'rhel'
+  package 'openssl-devel'
+  package 'libffi-devel'
+  package 'python27-devel'
+end
 
 include_recipe 'python'
 
