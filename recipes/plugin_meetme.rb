@@ -10,18 +10,6 @@ include_recipe 'chef-vault'
 
 newrelic_license = chef_vault_item("newrelic", "license_key")
 
-# plugin dependencies
-package 'nginx' do
-  action :install
-end
-
-template "/etc/nginx/conf.d/status.conf" do
- source    'nginx-status.conf.erb'
-
- notifies :restart, 'service[nginx]'
- action :create
-end
-
 #plugin dependencies
 case node['platform_family']
 
@@ -31,7 +19,8 @@ when 'rhel'
   package 'python27-devel'
 end
 
-include_recipe 'python'
+include_recipe 'python::package'
+include_recipe 'python::pip'
 
 python_pip 'requests[security]'
 python_pip 'newrelic-plugin-agent'
@@ -57,6 +46,8 @@ directory node['cog_newrelic']['plugin-path'] do
   action :create
 end
 
+
+
 # plugin installation & configuration
 template '/etc/newrelic/newrelic-plugin-agent.cfg' do
   source    'newrelic-plugin-agent.cfg.erb'
@@ -78,7 +69,21 @@ template '/etc/newrelic/newrelic-plugin-agent.cfg' do
   action :create
 end
 
+
+
 if node['cog_newrelic']['plugin-agent']['php-fpm']
+  # plugin dependencies
+  package 'nginx' do
+    action :install
+  end
+
+  template "/etc/nginx/conf.d/status.conf" do
+   source    'nginx-status.conf.erb'
+
+   notifies :restart, 'service[nginx]'
+   action :create
+  end
+
   node['cog_newrelic']['plugin-agent']['php-fpm-pools'].each_pair do | pool,value |
     template "/etc/nginx/conf.d/status-newrelic-meetme-php-fpm-#{value[:name]}" do
      source    'nginx-status-plugins.conf.erb'
@@ -98,9 +103,28 @@ if node['cog_newrelic']['plugin-agent']['php-fpm']
      action :create
     end
   end
+
+  service 'nginx' do
+
+    action [ :enable, :start ]
+  end
 end
 
+
+
 if node['cog_newrelic']['plugin-agent']['nginx']
+  # plugin dependencies
+  package 'nginx' do
+    action :install
+  end
+
+  template "/etc/nginx/conf.d/status.conf" do
+   source    'nginx-status.conf.erb'
+
+   notifies :restart, 'service[nginx]'
+   action :create
+  end
+
   template '/etc/nginx/conf.d/status-newrelic-meetme-nginx' do
    source    'nginx-status-plugins.conf.erb'
    variables({
@@ -116,20 +140,23 @@ if node['cog_newrelic']['plugin-agent']['nginx']
    notifies :restart, 'service[nginx]'
    action :create
   end
+
+  service 'nginx' do
+
+    action [ :enable, :start ]
+  end
 end
+
+
 
 if node['cog_newrelic']['plugin-agent']['mongodb']
   python_pip 'newrelic-plugin-agent[mongodb]'
 end
 
 
+
 runit_service 'newrelic-plugin-agent' do
   default_logger true
-
-  action [ :enable, :start ]
-end
-
-service 'nginx' do
 
   action [ :enable, :start ]
 end

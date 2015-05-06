@@ -1,3 +1,8 @@
+0.1.15
+======
+
+- meetme refactoring, python pip from source, python from package
+
 0.1.14
 ======
 
