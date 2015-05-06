@@ -36,8 +36,8 @@ Application:
     databases:
   <% @mongodb_dbs.each do |db,value| -%>
       <%= db %>:
-        username: <%= value.keys[0] %>
-        password: <%= value.values[0] %>
+        username: <%= value.keys[1] %>
+        password: <%= value.values[1] %>
   <% end -%>
 <% end -%>
 
