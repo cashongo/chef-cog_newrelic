@@ -36,8 +36,6 @@ include_recipe 'python'
 python_pip 'requests[security]'
 python_pip 'newrelic-plugin-agent'
 
-python_pip 'newrelic-plugin-agent[mongodb]'
-
 directory node['cog_newrelic']['plugin-log-path'] do
   recursive true
   mode      0777
@@ -69,8 +67,11 @@ template '/etc/newrelic/newrelic-plugin-agent.cfg' do
     :log_path     => node['cog_newrelic']['plugin-log-path'],
     :include_memcached  => node['cog_newrelic']['plugin-agent']['memcached'],
     :include_php_fpm    => node['cog_newrelic']['plugin-agent']['php-fpm'],
+    :php_fpm_pool       => node['cog_newrelic']['plugin-agent']['php-fpm-pools'],
     :include_nginx      => node['cog_newrelic']['plugin-agent']['nginx'],
-    :php_fpm_pool       => node['cog_newrelic']['plugin-agent']['php-fpm-pools']
+    :include_mongodb    => node['cog_newrelic']['plugin-agent']['mongodb'],
+    :mongodb_admin      => node['cog_newrelic']['plugin-agent']['mongodb-admin'],
+    :mongodb_dbs        => node['cog_newrelic']['plugin-agent']['mongodb-dbs']
   })
 
   notifies :restart, 'runit_service[newrelic-plugin-agent]'
@@ -116,6 +117,11 @@ if node['cog_newrelic']['plugin-agent']['nginx']
    action :create
   end
 end
+
+if node['cog_newrelic']['plugin-agent']['mongodb']
+  python_pip 'newrelic-plugin-agent[mongodb]'
+end
+
 
 runit_service 'newrelic-plugin-agent' do
   default_logger true

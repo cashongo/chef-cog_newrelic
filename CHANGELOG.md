@@ -1,3 +1,8 @@
+0.1.14
+======
+
+- added mongodb config for meetme plugin
+
 0.1.12
 ======
 

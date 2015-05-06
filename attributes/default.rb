@@ -53,8 +53,10 @@ default['cog_newrelic']['plugin_mysql']['metrics']                       = 'stat
 default['cog_newrelic']['plugin-agent']['memcached']                      = nil
 default['cog_newrelic']['plugin-agent']['php-fpm']                        = nil
 default['cog_newrelic']['plugin-agent']['nginx']                          = nil
-default['cog_newrelic']['plugin-agent']['php-fpm-pools']                  = nil #expects a hash of hashes: [ 'www' => { :name => 'www', :path => '/php-status-www', :port = '9000'} ]
-
+default['cog_newrelic']['plugin-agent']['mongodb']                        = nil
+default['cog_newrelic']['plugin-agent']['php-fpm-pools']                  = nil #expects a hash of hashes: { 'www' => { :name => 'www', :path => '/php-status-www', :port = '9000'} }
+default['cog_newrelic']['plugin-agent']['mongodb-admin']                  = nil #expects a hash { :user => 'user', :pass => 'secret'}
+default['cog_newrelic']['plugin-agent']['mongodb-dbs']                    = nil #expects a hash of hashes: { 'peachy_prod' => { :user => 'user', :pass => 'secret'} }
 
 default['cog_newrelic']['version']                      = '5.5'
 default['cog_newrelic']['php']['ini_file']              = '/etc/php-5.5.ini'

@@ -21,6 +21,26 @@ Application:
     path: /nginx_stub_status
 <% end -%>
 
+<% if @include_mongodb -%>
+mongodb:
+  name: <%= @hostname %>
+  host: localhost
+  port: 27017
+  admin_username: <%= @mongodb_admin['user'] %>
+  admin_password: <%= @mongodb_admin['pass'] %>
+  #ssl: False
+  #ssl_keyfile: /path/to/keyfile
+  #ssl_certfile: /path/to/certfile
+  #ssl_cert_reqs: 0  # Should be 0 for ssl.CERT_NONE, 1 for ssl.CERT_OPTIONAL, 2 for ssl.CERT_REQUIRED
+  #ssl_ca_certs: /path/to/cacerts file
+  databases:
+  <% @mongodb_dbs.each do |db,value| -%>
+    <%= db %>:
+      username: <%= value['user'] %>
+      password: <%= value['pass'] %>
+  <% end -%>
+<% end -%>
+
 <% if @include_php_fpm -%>
   php_fpm:
   <% @php_fpm_pool.each do |pool,value| -%>
