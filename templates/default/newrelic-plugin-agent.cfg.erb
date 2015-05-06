@@ -26,8 +26,8 @@ mongodb:
   name: <%= @hostname %>
   host: localhost
   port: 27017
-  admin_username: <%= @mongodb_admin['user'] %>
-  admin_password: <%= @mongodb_admin['pass'] %>
+  admin_username: <%= @mongodb_admin.keys[0] %>
+  admin_password: <%= @mongodb_admin.values[0] %>
   #ssl: False
   #ssl_keyfile: /path/to/keyfile
   #ssl_certfile: /path/to/certfile
@@ -36,8 +36,8 @@ mongodb:
   databases:
   <% @mongodb_dbs.each do |db,value| -%>
     <%= db %>:
-      username: <%= value['user'] %>
-      password: <%= value['pass'] %>
+      username: <%= value.keys[0] %>
+      password: <%= value.values[0] %>
   <% end -%>
 <% end -%>
 
