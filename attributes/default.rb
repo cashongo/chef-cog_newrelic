@@ -50,6 +50,12 @@ default['cog_newrelic']['plugin_gearman']['version']                     = '0.2.
 default['cog_newrelic']['plugin_mysql']['version']                       = '2.0.0'
 default['cog_newrelic']['plugin_mysql']['metrics']                       = 'status,newrelic'
 
+if (platform_family = 'rhel' &&  platform_version[0,1]=='7') then
+  default['cog_newrelic']['plugin_mysql']['java_package'] = 'java-1.8.0-openjdk'
+else
+  default['cog_newrelic']['plugin_mysql']['java_package'] = 'java-1.7.0-openjdk'
+end
+
 default['cog_newrelic']['plugin-agent']['memcached']                      = nil
 default['cog_newrelic']['plugin-agent']['php-fpm']                        = nil
 default['cog_newrelic']['plugin-agent']['nginx']                          = nil

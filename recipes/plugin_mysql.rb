@@ -12,7 +12,7 @@ newrelic_license  = chef_vault_item("newrelic", "license_key")
 mysql_access      = chef_vault_item("mysql_passwords_#{node.chef_environment}", "mysql")
 
 # plugin dependencies
-package 'java-1.7.0-openjdk'
+package node['cog_newrelic']['plugin_mysql']['java_package']
 
 directory node['cog_newrelic']['plugin-log-path'] do
   recursive true
