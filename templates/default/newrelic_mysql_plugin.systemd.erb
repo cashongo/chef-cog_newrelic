@@ -1,0 +1,12 @@
+[Unit]
+Description=New Relic MySQL Plugin
+
+[Service]
+WorkingDirectory=<%= @workdir %>
+ExecStart=/usr/bin/java -Xmx128m -jar plugin.jar
+User=<%= @user %>
+Group=<%= @group %>
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
