@@ -1,6 +1,6 @@
 default['cog_newrelic']['license']                            = nil
 default['cog_newrelic']['user']                               = 'newrelic'
-# FIXME under user is redefined as nil ? 
+# FIXME under user is redefined as nil ?
 default['cog_newrelic']['daemon_user']                        = 'newrelic'
 default['cog_newrelic']['server_monitoring']['license']       = nil
 default['cog_newrelic']['application_monitoring']['license']  = nil
@@ -68,17 +68,17 @@ default['cog_newrelic']['plugin-agent']['php-fpm-pools']                  = nil 
 default['cog_newrelic']['plugin-agent']['mongodb-admin']                  = nil #expects a hash { :user => 'user', :pass => 'secret'}
 default['cog_newrelic']['plugin-agent']['mongodb-dbs']                    = nil #expects a hash of hashes: { 'peachy_prod' => { :first_user => 'secret1', :second_user => 'secret2'} }
 
-default['cog_newrelic']['version']                      = '5.5'
-default['cog_newrelic']['php']['ini_file']              = '/etc/php-5.5.ini'
-default['cog_newrelic']['user']                         = nil
-default['cog_newrelic']['group']                        = nil
-default['cog_newrelic']['pool_conf_dir']                = '/etc/php-fpm.d'
-default['cog_newrelic']['conf_file']                    = '/etc/php-fpm.conf'
-default['cog_newrelic']['pid']                          = '/var/run/php-fpm/php-fpm-5.5.pid'
-default['cog_newrelic']['error_log']                    = '/var/log/php-fpm/error.log'
-default['cog_newrelic']['fpm-log-dir']                  = '/var/log/php-fpm'
-default['cog_newrelic']['log_level']                    = 'notice'
-default['cog_newrelic']['emergency_restart_threshold']  = 0
-default['cog_newrelic']['emergency_restart_interval']   = 0
-default['cog_newrelic']['process_control_timeout']      = 10
-default['cog_newrelic']['php-fpm-port']                 = 9100
+default['cog_newrelic']['php']['version']                      = '5.5'
+default['cog_newrelic']['php']['ini_file']                     = '/etc/php-5.5.ini'
+default['cog_newrelic']['php']['user']                         = nil
+default['cog_newrelic']['php']['group']                        = nil
+default['cog_newrelic']['php']['pool_conf_dir']                = '/etc/php-fpm.d'
+default['cog_newrelic']['php']['conf_file']                    = '/etc/php-fpm.conf'
+default['cog_newrelic']['php']['pid']                          = '/var/run/php-fpm/php-fpm-5.5.pid'
+default['cog_newrelic']['php']['error_log']                    = '/var/log/php-fpm/error.log'
+default['cog_newrelic'][['php']'fpm-log-dir']                  = '/var/log/php-fpm'
+default['cog_newrelic']['log_level']                           = 'notice'
+default['cog_newrelic']['php']['emergency_restart_threshold']  = 0
+default['cog_newrelic']['php']['emergency_restart_interval']   = 0
+default['cog_newrelic']['php']['process_control_timeout']      = 10
+default['cog_newrelic']['php']['php-fpm-port']                 = 9100

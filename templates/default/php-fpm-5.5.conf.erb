@@ -1,13 +1,13 @@
 ; File maintained by chef
 ; MANUAL CHANGES WILL BE IGNORED
 
-include = <%= "#{node['peachy_api_core']['pool_conf_dir']}/*.conf" %>
+include = <%= "#{node['peachy_newrelic']['php']['pool_conf_dir']}/*.conf" %>
 
 [global]
-pid                             = <%= node['peachy_api_core']['pid'] %>
-error_log                       = <%= node['peachy_api_core']['error_log'] %>
-log_level                       = <%= node['peachy_api_core']['log_level'] %>
-emergency_restart_threshold     = <%= node['peachy_api_core']['emergency_restart_threshold'] %>
-emergency_restart_interval      = <%= node['peachy_api_core']['emergency_restart_interval'] %>
-process_control_timeout         = <%= node['peachy_api_core']['process_control_timeout'] %>
+pid                             = <%= node['peachy_newrelic']['php']['pid'] %>
+error_log                       = <%= node['peachy_newrelic']['php']['error_log'] %>
+log_level                       = <%= node['peachy_newrelic']['php']['log_level'] %>
+emergency_restart_threshold     = <%= node['peachy_newrelic']['php']['emergency_restart_threshold'] %>
+emergency_restart_interval      = <%= node['peachy_newrelic']['php']['emergency_restart_interval'] %>
+process_control_timeout         = <%= node['peachy_newrelic']['php']['process_control_timeout'] %>
 daemonize                       = yes

@@ -30,7 +30,7 @@ php_fpm_pool "opcache-status" do
     process_manager     'dynamic'
     user                'newrelic'
     group               'newrelic'
-    listen              "127.0.0.1:#{node['cog_newrelic']['php-fpm-port']}"
+    listen              "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
     allowed_clients     '127.0.0.1'
     max_children        '1'
     start_servers       '1'
