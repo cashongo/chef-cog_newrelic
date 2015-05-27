@@ -25,6 +25,15 @@ TODO: List your supported platforms.
 
 ## Usage
 
+### Prepare MySQL user
+
+Allow newrelic to query mysql with correct grants:
+
+```sql
+CREATE USER newrelic@<INSERT_IP_ADDRESS_HERE> IDENTIFIED BY '<INSERT_YOUR_PASS_HERE>';
+GRANT PROCESS, REPLICATION CLIENT ON *.* TO newrelic@<INSERT_IP_ADDRESS_HERE>;
+```
+
 ### cog_newrelic::default
 
 Include `cog_newrelic` in your node's `run_list`:
