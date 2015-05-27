@@ -1,5 +1,7 @@
 default['cog_newrelic']['license']                            = nil
 default['cog_newrelic']['user']                               = 'newrelic'
+# FIXME under user is redefined as nil ? 
+default['cog_newrelic']['daemon_user']                        = 'newrelic'
 default['cog_newrelic']['server_monitoring']['license']       = nil
 default['cog_newrelic']['application_monitoring']['license']  = nil
 
@@ -49,6 +51,14 @@ default['cog_newrelic']['plugin_opcache']['version']                     = '1.0.
 default['cog_newrelic']['plugin_gearman']['version']                     = '0.2.0'
 default['cog_newrelic']['plugin_mysql']['version']                       = '2.0.0'
 default['cog_newrelic']['plugin_mysql']['metrics']                       = 'status,newrelic'
+
+if (platform_family = 'rhel' &&  platform_version[0,1]=='7') then
+  default['cog_newrelic']['plugin_mysql']['java_package'] = 'java-1.8.0-openjdk'
+  default['cog_newrelic']['plugin_mysql']['init_style'] = 'systemd'
+else
+  default['cog_newrelic']['plugin_mysql']['java_package'] = 'java-1.7.0-openjdk'
+  default['cog_newrelic']['plugin_mysql']['init_style'] = 'runit'
+end
 
 default['cog_newrelic']['plugin-agent']['memcached']                      = nil
 default['cog_newrelic']['plugin-agent']['php-fpm']                        = nil
