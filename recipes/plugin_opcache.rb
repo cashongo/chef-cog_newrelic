@@ -84,7 +84,7 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
       'allow'                   => '127.0.0.1',
       'deny'                    => 'all',
       'include'                 => 'fastcgi_params',
-      'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php-fpm-port']}"
+      'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
     }
   })
 

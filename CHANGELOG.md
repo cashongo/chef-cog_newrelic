@@ -1,3 +1,7 @@
+0.2.2
+
+- bugfix in opcach nginx conf
+
 0.1.15
 ======
 
