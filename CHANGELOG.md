@@ -1,43 +1,29 @@
-0.2.2
+## 0.2.3
+- added nginx.conf
 
+## 0.2.2
 - bugfix in opcach nginx conf
 
-0.1.15
-======
-
+## 0.1.15
 - meetme refactoring, python pip from source, python from package
 
-0.1.14
-======
-
+## 0.1.14
 - added mongodb config for meetme plugin
 
-0.1.12
-======
+## 0.1.12
+- added plugins for mysql and gearman
 
--	added plugins for mysql and gearman
+## 0.1.11
+- added channelgrabber/newrelic-gearman-plugin
 
-0.1.11
-======
+## 0.1.10
+- added poise/python dependency for pip lwrp
 
--	added channelgrabber/newrelic-gearman-plugin
+## 0.1.9
+- added plugin_opcache
 
-0.1.10
-======
+## 0.1.6
+- added php_agent recipe
 
--	added poise/python dependency for pip lwrp
-
-0.1.9
-=====
-
--	added plugin_opcache
-
-0.1.6
-=====
-
--	added php_agent recipe
-
-0.1.0
-=====
-
-Initial release of cog_newrelic
+## 0.1.0
+- Initial release of cog_newrelic

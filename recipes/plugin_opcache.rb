@@ -15,11 +15,16 @@ package 'nginx' do
   action :install
 end
 
-template "/etc/nginx/conf.d/status.conf" do
- source    'nginx-status.conf.erb'
+template "/etc/nginx/nginx.conf" do
+  source    'nginx.conf.erb'
+  notifies  :restart, 'service[nginx]'
+  action    :create
+end
 
- notifies :restart, 'service[nginx]'
- action :create
+template "/etc/nginx/conf.d/status.conf" do
+  source    'nginx-status.conf.erb'
+  notifies  :restart, 'service[nginx]'
+  action    :create
 end
 
 package 'php55-fpm' do
@@ -48,8 +53,7 @@ end
 directory node['cog_newrelic']['plugin-path'] do
   recursive true
   mode      0777
-
-  action :create
+  action    :create
 end
 
 bash 'extract_plugin' do
@@ -58,7 +62,6 @@ bash 'extract_plugin' do
     tar xzf #{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}.tar.gz -C #{node['cog_newrelic']['plugin-path']}
     chmod 0644 "#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}"
     EOH
-
   not_if { ::File.exists?("#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}") }
 end
 
@@ -70,7 +73,6 @@ template '/etc/newrelic/newrelic-phpopcache.ini' do
     :server_instance  => node.hostname,
     :poll_cycle       => 60
   })
-
   action :create
 end
 
@@ -87,7 +89,6 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
       'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
     }
   })
-
   notifies :restart, 'service[nginx]'
   action :create
 end
@@ -97,11 +98,9 @@ cron 'newrelic-phpopcache' do
 end
 
 service 'nginx' do
-
   action [ :enable, :start ]
 end
 
 service 'php-fpm-5.5' do
-
   action [ :enable, :start ]
 end

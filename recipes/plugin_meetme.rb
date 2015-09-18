@@ -28,25 +28,20 @@ python_pip 'newrelic-plugin-agent'
 directory node['cog_newrelic']['plugin-log-path'] do
   recursive true
   mode      0777
-
-  action :create
+  action    :create
 end
 
 directory node['cog_newrelic']['plugin-run-path'] do
   recursive true
   mode      0777
-
-  action :create
+  action    :create
 end
 
 directory node['cog_newrelic']['plugin-path'] do
   recursive true
   mode      0777
-
-  action :create
+  action    :create
 end
-
-
 
 # plugin installation & configuration
 template '/etc/newrelic/newrelic-plugin-agent.cfg' do
@@ -77,11 +72,16 @@ if node['cog_newrelic']['plugin-agent']['php-fpm']
     action :install
   end
 
-  template "/etc/nginx/conf.d/status.conf" do
-   source    'nginx-status.conf.erb'
+  template "/etc/nginx/nginx.conf" do
+    source    'nginx.conf.erb'
+    notifies  :restart, 'service[nginx]'
+    action    :create
+  end
 
+  template "/etc/nginx/conf.d/status.conf" do
+   source   'nginx-status.conf.erb'
    notifies :restart, 'service[nginx]'
-   action :create
+   action   :create
   end
 
   node['cog_newrelic']['plugin-agent']['php-fpm-pools'].each_pair do | pool,value |
@@ -98,24 +98,26 @@ if node['cog_newrelic']['plugin-agent']['php-fpm']
          'fastcgi_pass'            => "127.0.0.1:#{value[:port]}"
        }
      })
-
      notifies :restart, 'service[nginx]'
      action :create
     end
   end
 
   service 'nginx' do
-
     action [ :enable, :start ]
   end
 end
-
-
 
 if node['cog_newrelic']['plugin-agent']['nginx']
   # plugin dependencies
   package 'nginx' do
     action :install
+  end
+
+  template "/etc/nginx/nginx.conf" do
+    source    'nginx.conf.erb'
+    notifies  :restart, 'service[nginx]'
+    action    :create
   end
 
   template "/etc/nginx/conf.d/status.conf" do
@@ -142,18 +144,13 @@ if node['cog_newrelic']['plugin-agent']['nginx']
   end
 
   service 'nginx' do
-
     action [ :enable, :start ]
   end
 end
 
-
-
 if node['cog_newrelic']['plugin-agent']['mongodb']
   python_pip 'newrelic-plugin-agent[mongodb]'
 end
-
-
 
 runit_service 'newrelic-plugin-agent' do
   default_logger true
