@@ -13,14 +13,14 @@ newrelic_license = chef_vault_item("newrelic", "license_key")
 # make sure nginx is installed to query the stats
 package 'nginx' do
   action    :install
+  notifies  :create, 'template[/etc/nginx/nginx.conf]'
 end
 
-# template '/etc/nginx/nginx.conf' do
-#   source    'nginx.conf.erb'
-#   subscribes :install, "package[nginx]"
-#   notifies  :restart, 'service[nginx]'
-#   action    :nothing
-# end
+template '/etc/nginx/nginx.conf' do
+  source    'nginx.conf.erb'
+  notifies  :restart, 'service[nginx]'
+  action    :nothing
+end
 
 template "/etc/nginx/conf.d/status.conf" do
   source    'nginx-status.conf.erb'
