@@ -13,12 +13,13 @@ newrelic_license = chef_vault_item("newrelic", "license_key")
 # make sure nginx is installed to query the stats
 package 'nginx' do
   action :install
+  notifies :create, 'template[/etc/nginx/nginx.conf]'
 end
 
-template "/etc/nginx/nginx.conf" do
+template '/etc/nginx/nginx.conf' do
   source    'nginx.conf.erb'
   notifies  :restart, 'service[nginx]'
-  action    :create
+  action    :nothing
 end
 
 template "/etc/nginx/conf.d/status.conf" do
@@ -97,19 +98,6 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
       'access_log'              => 'off',
       'include'                 => 'fastcgi_params',
       'fastcgi_param'           => 'SCRIPT_FILENAME $request_filename',
-      'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
-    }
-  })
-  notifies :restart, 'service[nginx]'
-  action :create
-end
-
-template '/etc/nginx/conf.d/status-php-fpm-status' do
-  source    'nginx-status-plugins.conf.erb'
-  variables({
-    :location => '~ ^/(status|ping)$',
-    :params => {
-      'include'                 => 'fastcgi_params',
       'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
     }
   })
