@@ -64,7 +64,7 @@ end
 
 directory node['cog_newrelic']['plugin-path'] do
   recursive true
-  mode      0777
+  mode      0775
   action    :create
 end
 
@@ -72,7 +72,7 @@ bash 'extract_plugin' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
     tar xzf #{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}.tar.gz -C #{node['cog_newrelic']['plugin-path']}
-    chmod 0644 "#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}"
+    chown -r nginx:root "#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}"
     EOH
   not_if { ::File.exists?("#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}") }
 end
