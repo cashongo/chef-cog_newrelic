@@ -96,6 +96,7 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
       'alias'                   => "#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}/bin/newrelic-phpopcache.php",
       'access_log'              => 'off',
       'include'                 => 'fastcgi_params',
+      'fastcgi_param'           => 'SCRIPT_FILENAME $request_filename',
       'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
     }
   })
