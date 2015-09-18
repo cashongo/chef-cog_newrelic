@@ -47,9 +47,16 @@ php_fpm_pool "opcache-status" do
     enable true
 end
 
+# package manager on Amazon linux installs www pool by default, get rid of it
+when 'rhel', 'fedora'
+  if node['platform'] == 'amazon'
+  php_fpm_pool 'www' do
+    enable false
+  end
+end
+
 remote_file "#{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}.tar.gz" do
   source  "https://bitbucket.org/sking/newrelic-phpopcache/downloads/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}.tar.gz"
-
   action :create_if_missing
 end
 
@@ -82,12 +89,36 @@ end
 template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
   source    'nginx-status-plugins.conf.erb'
   variables({
-    :location => '/newrelic-phpopcache',
+    :location => '/newrelic-phpopcache.php',
     :params => {
       'alias'                   => "#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}/bin/newrelic-phpopcache.php",
       'access_log'              => 'off',
-      'allow'                   => '127.0.0.1',
-      'deny'                    => 'all',
+      'include'                 => 'fastcgi_params',
+      'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
+    }
+  })
+  notifies :restart, 'service[nginx]'
+  action :create
+end
+
+template '/etc/nginx/conf.d/status-php-fpm-status' do
+  source    'nginx-status-plugins.conf.erb'
+  variables({
+    :location => '/status',
+    :params => {
+      'include'                 => 'fastcgi_params',
+      'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
+    }
+  })
+  notifies :restart, 'service[nginx]'
+  action :create
+end
+
+template '/etc/nginx/conf.d/status-php-fpm-ping' do
+  source    'nginx-status-plugins.conf.erb'
+  variables({
+    :location => '/ping',
+    :params => {
       'include'                 => 'fastcgi_params',
       'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
     }
