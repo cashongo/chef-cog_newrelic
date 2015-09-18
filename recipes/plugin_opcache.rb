@@ -50,8 +50,9 @@ end
 # package manager on Amazon linux installs www pool by default, get rid of it
 when 'rhel', 'fedora'
   if node['platform'] == 'amazon'
-  php_fpm_pool 'www' do
-    enable false
+    php_fpm_pool 'www' do
+      enable false
+    end
   end
 end
 
@@ -104,20 +105,7 @@ end
 template '/etc/nginx/conf.d/status-php-fpm-status' do
   source    'nginx-status-plugins.conf.erb'
   variables({
-    :location => '/status',
-    :params => {
-      'include'                 => 'fastcgi_params',
-      'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
-    }
-  })
-  notifies :restart, 'service[nginx]'
-  action :create
-end
-
-template '/etc/nginx/conf.d/status-php-fpm-ping' do
-  source    'nginx-status-plugins.conf.erb'
-  variables({
-    :location => '/ping',
+    :location => '~ ^/(status|ping)$',
     :params => {
       'include'                 => 'fastcgi_params',
       'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
