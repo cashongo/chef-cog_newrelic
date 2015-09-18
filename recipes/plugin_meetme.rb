@@ -69,12 +69,12 @@ end
 if node['cog_newrelic']['plugin-agent']['php-fpm']
   # plugin dependencies
   package 'nginx' do
-    action :install
-    notifies  :create, 'template[/etc/nginx/nginx.conf]'
+    action    :install
   end
 
   template '/etc/nginx/nginx.conf' do
     source    'nginx.conf.erb'
+    subscribes :install, 'package[nginx]', :delayed
     notifies  :restart, 'service[nginx]'
     action    :nothing
   end
