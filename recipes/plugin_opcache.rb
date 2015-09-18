@@ -48,6 +48,7 @@ php_fpm_pool "opcache-status" do
 end
 
 # package manager on Amazon linux installs www pool by default, get rid of it
+case node['platform_family']
 when 'rhel', 'fedora'
   if node['platform'] == 'amazon'
     php_fpm_pool 'www' do
