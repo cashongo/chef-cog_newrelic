@@ -42,6 +42,9 @@ php_fpm_pool "opcache-status" do
     min_spare_servers   '1'
     max_spare_servers   '1'
     max_requests        '100'
+    php_options          'php_admin_flag[log_errors]'         => 'on',
+                         'php_admin_value[error_log]'         => "/var/log/newrelic/opcache-status.php-fpm.error.log"
+    enable true
 end
 
 remote_file "#{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}.tar.gz" do

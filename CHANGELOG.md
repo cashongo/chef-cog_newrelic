@@ -1,3 +1,6 @@
+## 0.2.4
+- logging for php-fpm opcache-status
+
 ## 0.2.3
 - added nginx.conf
 
