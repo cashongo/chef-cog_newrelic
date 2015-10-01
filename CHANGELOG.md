@@ -1,3 +1,6 @@
+## 0.2.7
+- updated chef-vault to resolve dependency conflict with application cookbook and frontend mysql sync cookbook
+
 ## 0.2.4
 - logging for php-fpm opcache-status
 
