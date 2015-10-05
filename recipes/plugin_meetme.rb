@@ -64,8 +64,7 @@ template '/etc/newrelic/newrelic-plugin-agent.cfg' do
   action :create
 end
 
-
-
+# PLUGIN PHP-FPM
 if node['cog_newrelic']['plugin-agent']['php-fpm']
   # plugin dependencies
   package 'nginx' do
@@ -109,6 +108,7 @@ if node['cog_newrelic']['plugin-agent']['php-fpm']
   end
 end
 
+# PLUGIN NGINX
 if node['cog_newrelic']['plugin-agent']['nginx']
   # plugin dependencies
   package 'nginx' do
@@ -150,6 +150,7 @@ if node['cog_newrelic']['plugin-agent']['nginx']
   end
 end
 
+# PLUGIN MONGODB
 if node['cog_newrelic']['plugin-agent']['mongodb']
   python_pip 'newrelic-plugin-agent[mongodb]'
 end
