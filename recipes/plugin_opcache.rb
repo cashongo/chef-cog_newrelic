@@ -32,6 +32,14 @@ package 'php55-fpm' do
   action :install
 end
 
+directory '/var/log/opcache-status' do
+  owner     'newrelic'
+  group     'newrelic'
+  mode      00755
+  recursive true
+  action    :create
+end
+
 php_fpm_pool "opcache-status" do
     process_manager     'dynamic'
     user                'newrelic'
@@ -44,7 +52,7 @@ php_fpm_pool "opcache-status" do
     max_spare_servers   '1'
     max_requests        '100'
     php_options          'php_admin_flag[log_errors]'         => 'on',
-                         'php_admin_value[error_log]'         => "/var/log/newrelic/opcache-status.php-fpm.error.log"
+                         'php_admin_value[error_log]'         => "/var/log/opcache-status/php-fpm.error.log"
     enable true
 end
 

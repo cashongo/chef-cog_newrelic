@@ -17,8 +17,7 @@ gem_package 'bundler'
 
 directory node['cog_newrelic']['plugin-path'] do
   recursive true
-  mode      0777
-
+  mode      00755
   action :create
 end
 
@@ -59,4 +58,12 @@ runit_service 'newrelic-plugin-gearman' do
   default_logger true
 
   action [ :enable, :start ]
+end
+
+#buggy gearman monitor should be restarted once a display_errors
+cron 'newrelic-plugin-gearman' do
+  minute  '45'
+  hour    '2'
+  command '/sbin/service newrelic-plugin-gearman stop 2&>1 > /dev/null && /sbin/service newrelic-plugin-gearman start 2&>1 > /dev/null'
+  user    'root'
 end
