@@ -63,7 +63,7 @@ Daemon:
 Logging:
   formatters:
     verbose:
-      format: '%(levelname) -10s %(asctime)s %(process)-6d %(processName) -15s %(threadName)-10s %(name) -45s %(funcName) -25s L%(lineno)-6d: %(message)s'
+      format: '"hostname":"<%= node.hostname %>", "priority":"%(levelname)s", "message":"%(message)s"'
   handlers:
     file:
       class : logging.handlers.RotatingFileHandler

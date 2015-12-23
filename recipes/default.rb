@@ -17,4 +17,26 @@
 # limitations under the License.
 #
 
+directory node['cog_newrelic']['plugin-path'] do
+  owner     'newrelic'
+  group     'newrelic'
+  recursive true
+  mode      0755
+  action    :create
+end
+
+directory node['cog_newrelic']['plugin-log-path'] do
+  recursive true
+  mode      0755
+  action    :create
+end
+
+directory node['cog_newrelic']['plugin-run-path'] do
+  owner     'newrelic'
+  group     'newrelic'
+  recursive true
+  mode      0755
+  action    :create
+end
+
 include_recipe 'cog_newrelic::server_monitor_agent'

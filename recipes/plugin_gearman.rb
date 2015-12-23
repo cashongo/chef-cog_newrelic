@@ -15,12 +15,6 @@ yum_package 'ruby-devel'
 gem_package 'io-console'
 gem_package 'bundler'
 
-directory node['cog_newrelic']['plugin-path'] do
-  recursive true
-  mode      00755
-  action :create
-end
-
 # plugin installation & configuration
 remote_file "#{Chef::Config[:file_cache_path]}/newrelic-gearman-#{node['cog_newrelic']['plugin_gearman']['version']}.tar.gz" do
   source  "https://github.com/channelgrabber/newrelic-gearman-plugin/archive/#{node['cog_newrelic']['plugin_gearman']['version']}.tar.gz"

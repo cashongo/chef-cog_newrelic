@@ -20,28 +20,6 @@ else
   notifyname = 'runit_service[newrelic-plugin-mysql]'
 end
 
-directory node['cog_newrelic']['plugin-log-path'] do
-  recursive true
-  mode      0777
-
-  action :create
-end
-
-directory node['cog_newrelic']['plugin-run-path'] do
-  recursive true
-  mode      0777
-
-  action :create
-end
-
-directory node['cog_newrelic']['plugin-path'] do
-  recursive true
-  mode      0700
-  owner node['cog_newrelic']['daemon_user']
-
-  action :create
-end
-
 # plugin installation & configuration
 remote_file "#{Chef::Config[:file_cache_path]}/newrelic-mysql-#{node['cog_newrelic']['plugin_mysql']['version']}.tar.gz" do
   source  "https://github.com/newrelic-platform/newrelic_mysql_java_plugin/blob/master/dist/newrelic_mysql_plugin-#{node['cog_newrelic']['plugin_mysql']['version']}.tar.gz?raw=true"

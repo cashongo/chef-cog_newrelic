@@ -32,14 +32,6 @@ package 'php55-fpm' do
   action :install
 end
 
-directory '/var/log/opcache-status' do
-  owner     'newrelic'
-  group     'newrelic'
-  mode      00755
-  recursive true
-  action    :create
-end
-
 php_fpm_pool "opcache-status" do
     process_manager     'dynamic'
     user                'newrelic'
@@ -52,7 +44,7 @@ php_fpm_pool "opcache-status" do
     max_spare_servers   '1'
     max_requests        '100'
     php_options          'php_admin_flag[log_errors]'         => 'on',
-                         'php_admin_value[error_log]'         => "/var/log/opcache-status/php-fpm.error.log"
+                         'php_admin_value[error_log]'         => "#{node['cog_newrelic']['plugin-log-path']}/php-fpm.error.log"
     enable true
 end
 
@@ -71,17 +63,12 @@ remote_file "#{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_n
   action :create_if_missing
 end
 
-directory node['cog_newrelic']['plugin-path'] do
-  recursive true
-  mode      0775
-  action    :create
-end
-
 bash 'extract_plugin' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
     tar xzf #{Chef::Config[:file_cache_path]}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}.tar.gz -C #{node['cog_newrelic']['plugin-path']}
-    chown -R nginx:root "#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}"
+    chown -R newrelic:newrelic "#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}"
+    chmod +x "#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}"
     EOH
   not_if { ::File.exists?("#{node['cog_newrelic']['plugin-path']}/newrelic-phpopcache-#{node['cog_newrelic']['plugin_opcache']['version']}") }
 end

@@ -25,32 +25,14 @@ include_recipe 'python::pip'
 python_pip 'requests[security]'
 python_pip 'newrelic-plugin-agent'
 
-directory node['cog_newrelic']['plugin-log-path'] do
-  recursive true
-  mode      0777
-  action    :create
-end
-
-directory node['cog_newrelic']['plugin-run-path'] do
-  recursive true
-  mode      0777
-  action    :create
-end
-
-directory node['cog_newrelic']['plugin-path'] do
-  recursive true
-  mode      0777
-  action    :create
-end
-
 # plugin installation & configuration
 template '/etc/newrelic/newrelic-plugin-agent.cfg' do
   source    'newrelic-plugin-agent.cfg.erb'
   variables({
-    :user         => node['cog_newrelic']['user'],
-    :license_key  => newrelic_license['license_key'],
-    :hostname     => node.hostname,
-    :log_path     => node['cog_newrelic']['plugin-log-path'],
+    :user               => node['cog_newrelic']['user'],
+    :license_key        => newrelic_license['license_key'],
+    :hostname           => node.hostname,
+    :log_path           => node['cog_newrelic']['plugin-log-path'],
     :include_memcached  => node['cog_newrelic']['plugin-agent']['memcached'],
     :include_php_fpm    => node['cog_newrelic']['plugin-agent']['php-fpm'],
     :php_fpm_pool       => node['cog_newrelic']['plugin-agent']['php-fpm-pools'],

@@ -1,3 +1,16 @@
+# 0.2.13
+- fix newrelic path permissions
+- bugfix wrong user and mode on opcache monitoring script
+
+# 0.2.12
+- disable docker monitor
+
+# 0.2.11
+- standardize log format for newrelic-plugin-agent python logger
+
+# 0.2.10
+- refactor plugin directories
+
 # 0.2.9
 - restrict permissions to newrelic directory
 - change log directory opcache
