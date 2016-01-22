@@ -1,6 +1,7 @@
 # 0.2.13
 - fix newrelic path permissions
 - bugfix wrong user and mode on opcache monitoring script
+- fix install order
 
 # 0.2.12
 - disable docker monitor
