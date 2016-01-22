@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_recipe 'cog_newrelic::server_monitor_agent'
+
 directory node['cog_newrelic']['plugin-path'] do
   owner     'newrelic'
   group     'newrelic'
@@ -38,5 +40,3 @@ directory node['cog_newrelic']['plugin-run-path'] do
   mode      0755
   action    :create
 end
-
-include_recipe 'cog_newrelic::server_monitor_agent'
