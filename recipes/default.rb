@@ -28,6 +28,8 @@ directory node['cog_newrelic']['plugin-path'] do
 end
 
 directory node['cog_newrelic']['plugin-log-path'] do
+  owner     'newrelic'
+  group     'newrelic'
   recursive true
   mode      0755
   action    :create

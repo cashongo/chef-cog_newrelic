@@ -1,4 +1,7 @@
 # 0.2.13
+- fix newrelic plugin log path permissions
+
+# 0.2.13
 - fix newrelic path permissions
 - bugfix wrong user and mode on opcache monitoring script
 - fix install order
