@@ -44,7 +44,7 @@ php_fpm_pool "opcache-status" do
     max_spare_servers   '1'
     max_requests        '100'
     php_options          'php_admin_flag[log_errors]'         => 'on',
-                         'php_admin_value[error_log]'         => "#{node['cog_newrelic']['plugin-log-path']}/php-fpm.error.log"
+                         'php_admin_value[error_log]'         => "#{node['cog_newrelic']['plugin-log-path']}/opcache-status.error.log"
     enable true
 end
 
