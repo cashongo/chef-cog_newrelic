@@ -4,7 +4,7 @@ maintainer_email 'andreas.wagner@cashongo.co.uk'
 license          'Apache 2.0'
 description      'Installs/Configures cog_newrelic'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.2.14'
+version          '0.2.15'
 
 depends 'chef-vault', '= 1.3.0'
 depends 'python',     '= 1.4.6'
