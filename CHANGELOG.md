@@ -1,5 +1,5 @@
 # 0.2.15
-- fix opcache-status log path
+- fix opcache-status log path 
 
 # 0.2.14
 - fix newrelic plugin log path permissions
