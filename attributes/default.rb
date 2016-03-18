@@ -14,10 +14,11 @@ default['cog_newrelic']['server_monitoring']['loglevel']        = nil
 default['cog_newrelic']['server_monitoring']['ssl']             = nil
 default['cog_newrelic']['server_monitoring']['ssl_ca_bundle']   = nil
 default['cog_newrelic']['server_monitoring']['ssl_ca_path']     = nil
-default['cog_newrelic']['server_monitoring']['hostname']        = nil
+default['cog_newrelic']['server_monitoring']['hostname']        = node['fqdn']
 default['cog_newrelic']['server_monitoring']['pidfile']         = nil
 default['cog_newrelic']['server_monitoring']['collector_host']  = nil
 default['cog_newrelic']['server_monitoring']['timeout']         = nil
+default['cog_newrelic']['server_monitoring']['labels']          = nil
 
 default['cog_newrelic']['repository']['repository_key'] = '548C16BF'
 default['cog_newrelic']['repository']['repository_action'] = :install
