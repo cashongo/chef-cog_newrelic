@@ -20,25 +20,25 @@
 include_recipe 'cog_newrelic::server_monitor_agent'
 
 directory node['cog_newrelic']['plugin-path'] do
-  owner     'newrelic'
-  group     'newrelic'
+  owner 'newrelic'
+  group 'newrelic'
   recursive true
-  mode      0755
-  action    :create
+  mode 0755
+  action :create
 end
 
 directory node['cog_newrelic']['plugin-log-path'] do
-  owner     'newrelic'
-  group     'newrelic'
+  owner 'newrelic'
+  group 'newrelic'
   recursive true
-  mode      0755
-  action    :create
+  mode 0755
+  action :create
 end
 
 directory node['cog_newrelic']['plugin-run-path'] do
-  owner     'newrelic'
-  group     'newrelic'
+  owner 'newrelic'
+  group 'newrelic'
   recursive true
-  mode      0755
-  action    :create
+  mode 0755
+  action :create
 end

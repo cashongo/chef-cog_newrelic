@@ -25,13 +25,13 @@ end
 
 include_recipe 'chef-vault'
 
-newrelic_license = chef_vault_item("newrelic", "license_key")
+newrelic_license = chef_vault_item('newrelic', 'license_key')
 
 case node['platform']
 when 'debian', 'ubuntu', 'redhat', 'centos', 'fedora', 'scientific', 'amazon', 'smartos'
   package node['cog_newrelic']['server_monitor_agent']['service_name'] do
     action node['cog_newrelic']['server_monitor_agent']['agent_action']
-    notifies :reload,'ohai[reload password]',:immediately
+    notifies :reload, 'ohai[reload password]', :immediately
   end
 
   # configure your New Relic license key
@@ -66,10 +66,8 @@ when 'debian', 'ubuntu', 'redhat', 'centos', 'fedora', 'scientific', 'amazon', '
   end
 end
 
-  # This is only needed at first run really
+# This is only needed at first run really
 ohai 'reload password' do
   action :nothing
-  if (node['chef_packages']['ohai']['version'].to_i > 6) then
-    plugin "etc"
-  end
+  plugin 'etc' if node['chef_packages']['ohai']['version'].to_i > 6
 end

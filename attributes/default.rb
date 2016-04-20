@@ -1,6 +1,6 @@
 default['cog_newrelic']['license']                            = nil
 default['cog_newrelic']['user']                               = 'newrelic'
-# FIXME under user is redefined as nil ?
+# FIXME: under user is redefined as nil ?
 default['cog_newrelic']['daemon_user']                        = 'newrelic'
 default['cog_newrelic']['server_monitoring']['license']       = nil
 default['cog_newrelic']['application_monitoring']['license']  = nil
@@ -53,7 +53,7 @@ default['cog_newrelic']['plugin_gearman']['version']                     = '0.2.
 default['cog_newrelic']['plugin_mysql']['version']                       = '2.0.0'
 default['cog_newrelic']['plugin_mysql']['metrics']                       = 'status,newrelic'
 
-if (platform_family = 'rhel' &&  platform_version[0,1]=='7') then
+if platform_family == 'rhel' && platform_version[0, 1] == '7'
   default['cog_newrelic']['plugin_mysql']['java_package'] = 'java-1.8.0-openjdk'
   default['cog_newrelic']['plugin_mysql']['init_style'] = 'systemd'
 else
@@ -65,9 +65,9 @@ default['cog_newrelic']['plugin-agent']['memcached']                      = nil
 default['cog_newrelic']['plugin-agent']['php-fpm']                        = nil
 default['cog_newrelic']['plugin-agent']['nginx']                          = nil
 default['cog_newrelic']['plugin-agent']['mongodb']                        = nil
-default['cog_newrelic']['plugin-agent']['php-fpm-pools']                  = nil #expects a hash of hashes: { 'www' => { :name => 'www', :path => '/php-status-www', :port = '9000'} }
-default['cog_newrelic']['plugin-agent']['mongodb-admin']                  = nil #expects a hash { :user => 'user', :pass => 'secret'}
-default['cog_newrelic']['plugin-agent']['mongodb-dbs']                    = nil #expects a hash of hashes: { 'peachy_prod' => { :first_user => 'secret1', :second_user => 'secret2'} }
+default['cog_newrelic']['plugin-agent']['php-fpm-pools']                  = nil # expects a hash of hashes: { 'www' => { :name => 'www', :path => '/php-status-www', :port = '9000'} }
+default['cog_newrelic']['plugin-agent']['mongodb-admin']                  = nil # expects a hash { :user => 'user', :pass => 'secret'}
+default['cog_newrelic']['plugin-agent']['mongodb-dbs']                    = nil # expects a hash of hashes: { 'peachy_prod' => { :first_user => 'secret1', :second_user => 'secret2'} }
 
 default['cog_newrelic']['php']['version']                      = '5.5'
 default['cog_newrelic']['php']['ini_file']                     = '/etc/php-5.5.ini'

@@ -25,30 +25,23 @@ end
 
 include_recipe 'chef-vault'
 
-newrelic_license = chef_vault_item("newrelic", "license_key")
+newrelic_license = chef_vault_item('newrelic', 'license_key')
 
 template '/etc/newrelic/newrelic.cfg' do
   source 'newrelic_php_daemon.cfg.erb'
   mode      0644
   owner     'root'
   group     'root'
-  variables({
-  })
 end
 
-yum_package 'newrelic-php5' do
-
-  action :install
-end
+yum_package 'newrelic-php5'
 
 template '/etc/php.d/newrelic.ini' do
   source 'newrelic.ini.erb'
-  mode      0644
-  owner     'root'
-  group     'root'
-  variables({
-    :license_key    => newrelic_license["license_key"],
-    :app_name       => node['cog_newrelic']['php_agent']['app_name'],
-    :framework      => node['cog_newrelic']['php_agent']['framework']
-  })
+  mode 0644
+  owner 'root'
+  group 'root'
+  variables(license_key: newrelic_license['license_key'],
+            app_name: node['cog_newrelic']['php_agent']['app_name'],
+            framework: node['cog_newrelic']['php_agent']['framework'])
 end

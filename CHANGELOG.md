@@ -1,3 +1,6 @@
+# 0.3.0
+- move to cog_php
+
 # 0.2.16
 - set hostname default to fqdn
 

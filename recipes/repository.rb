@@ -18,8 +18,8 @@
 #
 
 case node['platform']
-  when 'debian', 'ubuntu', 'redhat', 'centos', 'fedora', 'scientific', 'amazon'
-    package 'wget'
+when 'debian', 'ubuntu', 'redhat', 'centos', 'fedora', 'scientific', 'amazon'
+  package 'wget'
 end
 
 case node['platform']
