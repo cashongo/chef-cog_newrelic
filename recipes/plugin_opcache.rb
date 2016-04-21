@@ -30,7 +30,6 @@ end
 
 php_fpm_service 'php55-fpm' do
   pid '/var/run/php-fpm/php-fpm-5.5.pid'
-  fpm_options 'process_control_timeout' => node['peachy_frontend']['php-fpm_process_control_timeout']
   action :create
 end
 
@@ -40,15 +39,15 @@ php_fpm_pool 'opcache-status' do
   process_manager 'dynamic'
   pool_user 'newrelic'
   pool_group 'newrelic'
-  listen "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
+  listen "127.0.0.1:#{node['cog_newrelic']['plugin_opcache']['php-fpm-port']}"
   allowed_clients '127.0.0.1'
-  max_children        '1'
-  start_servers       '1'
-  min_spare_servers   '1'
-  max_spare_servers   '1'
-  max_requests        '100'
-  pm_status_path('/' + node['peachy_frontend']['php-fpm_port'] + '-status')
-  ping_path('/' + node['peachy_frontend']['php-fpm_port'] + '-ping')
+  max_children 3
+  start_servers 2
+  min_spare_servers 1
+  max_spare_servers 2
+  max_requests 100
+  pm_status_path "/#{node['cog_newrelic']['plugin_opcache']['php-fpm-port']}-status"
+  ping_path "/#{node['cog_newrelic']['plugin_opcache']['php-fpm-port']}-ping"
   pool_options('php_admin_flag[log_errors]' => 'on',
                'php_admin_value[error_log]' => "#{node['cog_newrelic']['plugin-log-path']}/opcache-status.error.log")
   action :create
@@ -98,7 +97,7 @@ template '/etc/nginx/conf.d/status-newrelic-phpopcache' do
               'access_log'              => 'off',
               'include'                 => 'fastcgi_params',
               'fastcgi_param'           => 'SCRIPT_FILENAME $request_filename',
-              'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['php']['php-fpm-port']}"
+              'fastcgi_pass'            => "127.0.0.1:#{node['cog_newrelic']['plugin_opcache']['php-fpm-port']}"
             })
   notifies :restart, 'service[nginx]'
   action :create

@@ -1,3 +1,7 @@
+# 0.3.1
+- fix attribute names
+- raise opcache worker level
+
 # 0.3.0
 - move to cog_php
 

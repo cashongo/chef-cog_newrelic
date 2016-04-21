@@ -49,6 +49,7 @@ default['cog_newrelic']['plugin-path']                                   = '/opt
 default['cog_newrelic']['plugin-log-path']                               = '/var/log/newrelic-plugins'
 default['cog_newrelic']['plugin-run-path']                               = '/var/run/newrelic'
 default['cog_newrelic']['plugin_opcache']['version']                     = '1.0.3'
+default['cog_newrelic']['plugin_opcache']['php-fpm-port']                 = 9100
 default['cog_newrelic']['plugin_gearman']['version']                     = '0.2.0'
 default['cog_newrelic']['plugin_mysql']['version']                       = '2.0.0'
 default['cog_newrelic']['plugin_mysql']['metrics']                       = 'status,newrelic'
@@ -68,18 +69,3 @@ default['cog_newrelic']['plugin-agent']['mongodb']                        = nil
 default['cog_newrelic']['plugin-agent']['php-fpm-pools']                  = nil # expects a hash of hashes: { 'www' => { :name => 'www', :path => '/php-status-www', :port = '9000'} }
 default['cog_newrelic']['plugin-agent']['mongodb-admin']                  = nil # expects a hash { :user => 'user', :pass => 'secret'}
 default['cog_newrelic']['plugin-agent']['mongodb-dbs']                    = nil # expects a hash of hashes: { 'peachy_prod' => { :first_user => 'secret1', :second_user => 'secret2'} }
-
-default['cog_newrelic']['php']['version']                      = '5.5'
-default['cog_newrelic']['php']['ini_file']                     = '/etc/php-5.5.ini'
-default['cog_newrelic']['php']['user']                         = nil
-default['cog_newrelic']['php']['group']                        = nil
-default['cog_newrelic']['php']['pool_conf_dir']                = '/etc/php-fpm.d'
-default['cog_newrelic']['php']['conf_file']                    = '/etc/php-fpm.conf'
-default['cog_newrelic']['php']['pid']                          = '/var/run/php-fpm/php-fpm-5.5.pid'
-default['cog_newrelic']['php']['error_log']                    = '/var/log/php-fpm/error.log'
-default['cog_newrelic']['php']['fpm-log-dir']                  = '/var/log/php-fpm'
-default['cog_newrelic']['php']['log_level']                    = 'notice'
-default['cog_newrelic']['php']['emergency_restart_threshold']  = 0
-default['cog_newrelic']['php']['emergency_restart_interval']   = 0
-default['cog_newrelic']['php']['process_control_timeout']      = 10
-default['cog_newrelic']['php']['php-fpm-port']                 = 9100
