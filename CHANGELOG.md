@@ -1,3 +1,6 @@
+# 0.3.2
+- loosen version restrictions on cog_php for convenience
+
 # 0.3.1
 - fix attribute names
 - raise opcache worker level
