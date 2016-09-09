@@ -14,12 +14,8 @@ if node['cog_newrelic']['plugin-agent']['postgresql']
 end
 
 # plugin dependencies
-case node['platform_family']
-
-when 'rhel'
-  package 'openssl-devel'
-  package 'libffi-devel'
-  package 'python27-devel'
+%w(openssl-devel libffi-devel python27-devel).each do |i|
+  package i
 end
 
 include_recipe 'python::package'
