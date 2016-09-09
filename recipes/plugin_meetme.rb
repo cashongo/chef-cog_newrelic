@@ -43,6 +43,8 @@ template '/etc/newrelic/newrelic-plugin-agent.cfg' do
     postgresql_config: node['cog_newrelic']['plugin-agent']['postgresql_dbs'],
     postgresql_secrets: postgresql_secrets
   )
+  notifies :restart, 'runit_service[newrelic-plugin-agent]',:delayed
+  sensitive true
   action :create
 end
 
