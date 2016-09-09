@@ -7,8 +7,11 @@ chef_gem 'chef-vault' do
 end
 
 include_recipe 'chef-vault'
-
+postgresql_secrets = {}
 newrelic_license = chef_vault_item('newrelic', 'license_key')
+if node['cog_newrelic']['plugin-agent']['postgresql']
+  postgresql_secrets = chef_vault_item('newrelic',node['cog_newrelic']['postgresql_secrets_vault'])
+end
 
 # plugin dependencies
 case node['platform_family']
