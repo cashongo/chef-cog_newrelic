@@ -6,7 +6,7 @@ description      'Installs/Configures cog_newrelic'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.3.2'
 
-depends 'chef-vault', '1.3.2'
 depends 'python', '1.4.6'
-depends 'runit', '1.5.10'
-depends 'cog_php', '~> 0.1'
+depends 'chef-vault'
+depends 'runit'
+depends 'cog_php'
