@@ -127,6 +127,11 @@ if node['cog_newrelic']['plugin-agent']['mongodb']
   python_pip 'newrelic-plugin-agent[mongodb]'
 end
 
+# PLUGIN POSTGRES
+python_pip 'newrelic-plugin-agent[postgresql]' do
+  only_if { node['cog_newrelic']['plugin-agent']['postgresql'] }
+end
+
 runit_service 'newrelic-plugin-agent' do
   default_logger true
   action [:enable, :start]
