@@ -27,18 +27,22 @@ python_pip 'newrelic-plugin-agent'
 # plugin installation & configuration
 template '/etc/newrelic/newrelic-plugin-agent.cfg' do
   source 'newrelic-plugin-agent.cfg.erb'
-  variables(user: node['cog_newrelic']['user'],
-            license_key: newrelic_license['license_key'],
-            hostname: node.hostname,
-            log_path: node['cog_newrelic']['plugin-log-path'],
-            include_memcached: node['cog_newrelic']['plugin-agent']['memcached'],
-            include_php_fpm: node['cog_newrelic']['plugin-agent']['php-fpm'],
-            php_fpm_pool: node['cog_newrelic']['plugin-agent']['php-fpm-pools'],
-            include_nginx: node['cog_newrelic']['plugin-agent']['nginx'],
-            include_mongodb: node['cog_newrelic']['plugin-agent']['mongodb'],
-            mongodb_admin: node['cog_newrelic']['plugin-agent']['mongodb-admin'],
-            mongodb_dbs: node['cog_newrelic']['plugin-agent']['mongodb-dbs'])
-  notifies :restart, 'runit_service[newrelic-plugin-agent]'
+  variables(
+    user: node['cog_newrelic']['user'],
+    license_key: newrelic_license['license_key'],
+    hostname: node.hostname,
+    log_path: node['cog_newrelic']['plugin-log-path'],
+    include_memcached: node['cog_newrelic']['plugin-agent']['memcached'],
+    include_php_fpm: node['cog_newrelic']['plugin-agent']['php-fpm'],
+    php_fpm_pool: node['cog_newrelic']['plugin-agent']['php-fpm-pools'],
+    include_nginx: node['cog_newrelic']['plugin-agent']['nginx'],
+    include_mongodb: node['cog_newrelic']['plugin-agent']['mongodb'],
+    mongodb_admin: node['cog_newrelic']['plugin-agent']['mongodb-admin'],
+    mongodb_dbs: node['cog_newrelic']['plugin-agent']['mongodb-dbs'],
+    include_postgresql: node['cog_newrelic']['plugin-agent']['postgresql'],
+    postgresql_config: node['cog_newrelic']['plugin-agent']['postgresql_dbs'],
+    postgresql_secrets: postgresql_secrets
+  )
   action :create
 end
 
