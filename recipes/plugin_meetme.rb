@@ -7,16 +7,15 @@ chef_gem 'chef-vault' do
 end
 
 include_recipe 'chef-vault'
-
+postgresql_secrets = {}
 newrelic_license = chef_vault_item('newrelic', 'license_key')
+if node['cog_newrelic']['plugin-agent']['postgresql']
+  postgresql_secrets = chef_vault_item('newrelic',node['cog_newrelic']['postgresql_secrets_vault'])
+end
 
 # plugin dependencies
-case node['platform_family']
-
-when 'rhel'
-  package 'openssl-devel'
-  package 'libffi-devel'
-  package 'python27-devel'
+%w(openssl-devel libffi-devel python27-devel).each do |i|
+  package i
 end
 
 include_recipe 'python::package'
@@ -28,18 +27,24 @@ python_pip 'newrelic-plugin-agent'
 # plugin installation & configuration
 template '/etc/newrelic/newrelic-plugin-agent.cfg' do
   source 'newrelic-plugin-agent.cfg.erb'
-  variables(user: node['cog_newrelic']['user'],
-            license_key: newrelic_license['license_key'],
-            hostname: node.hostname,
-            log_path: node['cog_newrelic']['plugin-log-path'],
-            include_memcached: node['cog_newrelic']['plugin-agent']['memcached'],
-            include_php_fpm: node['cog_newrelic']['plugin-agent']['php-fpm'],
-            php_fpm_pool: node['cog_newrelic']['plugin-agent']['php-fpm-pools'],
-            include_nginx: node['cog_newrelic']['plugin-agent']['nginx'],
-            include_mongodb: node['cog_newrelic']['plugin-agent']['mongodb'],
-            mongodb_admin: node['cog_newrelic']['plugin-agent']['mongodb-admin'],
-            mongodb_dbs: node['cog_newrelic']['plugin-agent']['mongodb-dbs'])
-  notifies :restart, 'runit_service[newrelic-plugin-agent]'
+  variables(
+    user: node['cog_newrelic']['user'],
+    license_key: newrelic_license['license_key'],
+    hostname: node.hostname,
+    log_path: node['cog_newrelic']['plugin-log-path'],
+    include_memcached: node['cog_newrelic']['plugin-agent']['memcached'],
+    include_php_fpm: node['cog_newrelic']['plugin-agent']['php-fpm'],
+    php_fpm_pool: node['cog_newrelic']['plugin-agent']['php-fpm-pools'],
+    include_nginx: node['cog_newrelic']['plugin-agent']['nginx'],
+    include_mongodb: node['cog_newrelic']['plugin-agent']['mongodb'],
+    mongodb_admin: node['cog_newrelic']['plugin-agent']['mongodb-admin'],
+    mongodb_dbs: node['cog_newrelic']['plugin-agent']['mongodb-dbs'],
+    include_postgresql: node['cog_newrelic']['plugin-agent']['postgresql'],
+    postgresql_config: node['cog_newrelic']['plugin-agent']['postgresql_dbs'],
+    postgresql_secrets: postgresql_secrets
+  )
+  notifies :restart, 'runit_service[newrelic-plugin-agent]',:delayed
+  sensitive true
   action :create
 end
 
@@ -122,6 +127,11 @@ end
 # PLUGIN MONGODB
 if node['cog_newrelic']['plugin-agent']['mongodb']
   python_pip 'newrelic-plugin-agent[mongodb]'
+end
+
+# PLUGIN POSTGRES
+python_pip 'newrelic-plugin-agent[postgresql]' do
+  only_if { node['cog_newrelic']['plugin-agent']['postgresql'] }
 end
 
 runit_service 'newrelic-plugin-agent' do

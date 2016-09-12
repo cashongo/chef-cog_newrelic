@@ -66,6 +66,9 @@ default['cog_newrelic']['plugin-agent']['memcached']                      = nil
 default['cog_newrelic']['plugin-agent']['php-fpm']                        = nil
 default['cog_newrelic']['plugin-agent']['nginx']                          = nil
 default['cog_newrelic']['plugin-agent']['mongodb']                        = nil
+default['cog_newrelic']['plugin-agent']['postgresql']                     = nil
 default['cog_newrelic']['plugin-agent']['php-fpm-pools']                  = nil # expects a hash of hashes: { 'www' => { :name => 'www', :path => '/php-status-www', :port = '9000'} }
 default['cog_newrelic']['plugin-agent']['mongodb-admin']                  = nil # expects a hash { :user => 'user', :pass => 'secret'}
 default['cog_newrelic']['plugin-agent']['mongodb-dbs']                    = nil # expects a hash of hashes: { 'peachy_prod' => { :first_user => 'secret1', :second_user => 'secret2'} }
+default['cog_newrelic']['plugin-agent']['postgresql_dbs']                 = nil
+default['cog_newrelic']['postgresql_secrets_vault']                       = nil

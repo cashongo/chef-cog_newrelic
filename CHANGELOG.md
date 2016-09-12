@@ -1,3 +1,8 @@
+# 0.4.0
+- monitor postgresql
+- mark configuration file template as sensitive
+- manage dependencies via peachy_base
+
 # 0.3.2
 - loosen version restrictions on cog_php for convenience
 

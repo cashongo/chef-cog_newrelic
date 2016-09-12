@@ -56,6 +56,19 @@ Application:
   <% end -%>
 <% end -%>
 
+<% if @include_postgresql -%>
+  postgresql:
+  <% @postgresql_config.each do |name,config| -%>
+    - name: <%= name %>
+      <% if @postgresql_secrets.has_key?(name)-%>
+      password: <%= @postgresql_secrets[name] %>
+      <% end -%>
+      <% config.each do |key,value| -%>
+      <%= key %>: <%= value %>
+      <% end -%>
+  <% end -%>
+<% end -%>
+
 Daemon:
   user: <%= @user %>
   pidfile: /var/run/newrelic/newrelic-plugin-agent.pid
