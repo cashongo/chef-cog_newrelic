@@ -1,3 +1,6 @@
+# 0.4.1
+- quiet down nginx logrotation
+
 # 0.4.0
 - monitor postgresql
 - mark configuration file template as sensitive

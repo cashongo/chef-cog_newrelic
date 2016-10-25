@@ -66,6 +66,13 @@ if node['cog_newrelic']['plugin-agent']['php-fpm']
     action   :create
   end
 
+  cookbook_file '/etc/logrotate.d/nginx' do
+    source 'logrotate_nginx'
+    owner 'root'
+    group 'root'
+    mode 00644
+  end
+
   node['cog_newrelic']['plugin-agent']['php-fpm-pools'].each_pair do |_pool, value|
     template "/etc/nginx/conf.d/status-newrelic-meetme-php-fpm-#{value[:name]}" do
       source 'nginx-status-plugins.conf.erb'
@@ -92,6 +99,13 @@ end
 if node['cog_newrelic']['plugin-agent']['nginx']
   # plugin dependencies
   package 'nginx'
+
+  cookbook_file '/etc/logrotate.d/nginx' do
+    source 'logrotate_nginx'
+    owner 'root'
+    group 'root'
+    mode 00644
+  end
 
   template '/etc/nginx/nginx.conf' do
     source 'nginx.conf.erb'

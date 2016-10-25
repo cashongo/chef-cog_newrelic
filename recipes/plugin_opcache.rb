@@ -15,6 +15,13 @@ package 'nginx' do
   action :install
 end
 
+cookbook_file '/etc/logrotate.d/nginx' do
+  source 'logrotate_nginx'
+  owner 'root'
+  group 'root'
+  mode 00644
+end
+
 template '/etc/nginx/nginx.conf' do
   source 'nginx.conf.erb'
   subscribes :install, 'package[nginx]', :delayed
