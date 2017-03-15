@@ -1,3 +1,6 @@
+# 0.5.0
+- make php-fpm versionable
+
 # 0.4.1
 - quiet down nginx logrotation
 
