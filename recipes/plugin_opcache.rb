@@ -36,7 +36,7 @@ template '/etc/nginx/conf.d/status.conf' do
 end
 
 php_fpm_service node['cog_newrelic']['plugin_opcache']['php-fpm-version'] do
-  pid '/var/run/php-fpm/php-fpm.pid'
+  pid "/var/run/php-fpm/php-fpm-#{node['cog_newrelic']['plugin_opcache']['php-fpm-version-string']}.pid"
   action :create
 end
 

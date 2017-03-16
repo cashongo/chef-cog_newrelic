@@ -50,6 +50,7 @@ default['cog_newrelic']['plugin-log-path']                               = '/var
 default['cog_newrelic']['plugin-run-path']                               = '/var/run/newrelic'
 default['cog_newrelic']['plugin_opcache']['version']                     = '1.0.3'
 default['cog_newrelic']['plugin_opcache']['php-fpm-version']             = 'php55-fpm'
+default['cog_newrelic']['plugin_opcache']['php-fpm-version-string'] = '5.5'
 default['cog_newrelic']['plugin_opcache']['php-fpm-port']                = 9100
 default['cog_newrelic']['plugin_gearman']['version']                     = '0.2.0'
 default['cog_newrelic']['plugin_mysql']['version']                       = '2.0.0'

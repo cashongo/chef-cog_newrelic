@@ -1,3 +1,6 @@
+# 0.5.1
+- bugfix, as php version needs to be present in pid file name for init script to work
+
 # 0.5.0
 - make php-fpm versionable
 
