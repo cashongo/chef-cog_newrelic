@@ -1,3 +1,6 @@
+# 0.5.2
+- fix template comment style
+
 # 0.5.1
 - bugfix, as php version needs to be present in pid file name for init script to work
 
