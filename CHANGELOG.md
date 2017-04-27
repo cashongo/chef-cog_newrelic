@@ -1,3 +1,6 @@
+# 0.5.3
+- bugfix
+
 # 0.5.2
 - fix template comment style
 
